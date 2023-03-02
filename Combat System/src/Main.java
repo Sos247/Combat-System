@@ -1,12 +1,13 @@
 public class Main {
     public static void main(String[] args)
     {
-        ClassSelection George = new ClassSelection();
-        Randomizer steps = new Randomizer();
+        Setup newGame = new Setup();
+        Setup.Hero chooseHero = newGame.new Hero();
+        Adventure newAdventure = new Adventure();
 
+        chooseHero.selectClass();
+        newAdventure.setDifficulty();
+        newAdventure.initialize();
 
-        George.selectClass();
-        steps.setStepSize(3);
-        steps.initialize();
     }
 }
