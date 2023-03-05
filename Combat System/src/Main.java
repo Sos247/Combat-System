@@ -7,6 +7,6 @@ public class Main {
 
         newHero.selectClass();
         newAdventure.setDifficulty();
-        newAdventure.initialize(newEnemy);
+        newAdventure.initialize(newHero, newEnemy);
     }
 }
