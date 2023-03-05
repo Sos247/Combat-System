@@ -34,14 +34,14 @@ public class Adventure {
         return steps;
     }
 
-    public void initialize(Enemy e) {
+    public void initialize(Hero h, Enemy e) {
         ArrayList<Integer> path = new ArrayList<>();
         for (int i = 0; i < getDifficulty(); ) {
 
             path.add(e.encounterClass());
 
             if (e.classType >= 0 && e.classType <= 2) {
-                battle(hero, enemy);
+                battle(h, e);
             } else {
                 i++;
             }
