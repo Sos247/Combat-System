@@ -12,15 +12,16 @@ public class Hero extends NPC {
                 selection = input.nextInt();
                 switch (selection) {
                     case 1:
-                        NPC.Classes.BARBARIAN;
+                        setStats("Barbarian",100,40,60,60);
                         allStatsTogether();
                         break;
                     case 2:
-                        NPC.Classes.ROGUE;
+
+                        setStats("Rogue",100,40,40,80);
                         allStatsTogether();
                         break;
                     case 3:
-                        NPC.Classes.WIZARD;
+                        setStats("Wizard", 100,80,20,40);
                         allStatsTogether();
                         break;
                     default:
@@ -30,7 +31,7 @@ public class Hero extends NPC {
             } while (selection > 3 || selection < 1);
         }
 
-        public int heroAttack() {
+        public int heroAttack(Enemy e) {
             int hAttack;
             Scanner input = new Scanner(System.in);
             System.out.println("Select Your Attack : 1.Basic  2.Slash  3. Charge");
@@ -39,15 +40,15 @@ public class Hero extends NPC {
             switch (hAttack) {
                 case 1:
                     System.out.println("Basic");
-                    hAttack = getDamage();
+                    hAttack = damage - e.armor;
                     break;
                 case 2:
                     System.out.println("Slash");
-                    hAttack = getDamage() + 15;
+                    hAttack = (damage + 15) - e.armor;
                     break;
                 case 3:
                     System.out.println("Charge");
-                    hAttack = getDamage() + 20;
+                    hAttack = (damage + 20) - e.armor;
                     break;
                 default:
                     System.out.print("Select a Proper value : ");
@@ -57,6 +58,3 @@ public class Hero extends NPC {
         }
 
     }
-
-
-}

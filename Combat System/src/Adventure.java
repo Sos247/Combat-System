@@ -53,8 +53,11 @@ public class Adventure {
     public void battle(Hero h, Enemy e) {
 
         do {
-            h.heroAttack();
-            e.enemyAttack();
+            e.hp -= h.heroAttack(e);
+            System.out.println("Enemy remaining hp = " + e.hp);
+
+            h.hp -= e.enemyAttack(h);
+            System.out.println("Your remaining hp = " + h.hp);
 
         } while (h.getHp() > 0 && e.getHp() > 0);
 

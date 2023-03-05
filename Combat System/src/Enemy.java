@@ -1,13 +1,11 @@
 import java.util.Random;
-import java.util.Scanner;
 
 public class Enemy extends NPC{
 
     public int classType;
     public int encounterClass() {
-        int range = 3;
         Random randSelect = new Random();
-        classType = randSelect.nextInt(range);
+        classType = randSelect.nextInt(4);
         switch (classType) {
 
             case 0:
@@ -34,25 +32,24 @@ public class Enemy extends NPC{
         return classType;
     }
 
-    public int enemyAttack(){
+    public int enemyAttack(Hero h){
 
         int eAttack;
-        int range = 2;
         Random randSelect = new Random();
-        eAttack = randSelect.nextInt(range);
+        eAttack = randSelect.nextInt(3);
 
         switch (eAttack) {
-            case 1:
+            case 0:
                 System.out.println("Enemy Attacked with Basic");
-                eAttack = getDamage();
+                eAttack = damage - h.armor;
+                break;
+            case 1:
+                System.out.println("Enemy Attacked with Slash");
+                eAttack= (damage + 15) - h.armor;
                 break;
             case 2:
-                System.out.println("Enemy Attacked with Slash");
-                eAttack= getDamage() + 15;
-                break;
-            case 3:
                 System.out.println("Enemy Attacked with Charge");
-                eAttack = getDamage() +20;
+                eAttack = (damage + 20) - h.armor;
                 break;
         }
         return eAttack;
