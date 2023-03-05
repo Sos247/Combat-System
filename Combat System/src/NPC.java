@@ -1,44 +1,49 @@
-/*public class NPC extends Setup {
-    //name
-    //classType
-    //stats (hp, armor, mana)
-    protected int hpNpc;
-    protected int manaNpc;
-    protected int armorNpc;
+import java.util.Random;
+import java.util.Scanner;
 
-    protected int damageNpc;
+public class NPC {
+    private String name;
+    private int hp;
+    private int mana;
+    private int armor;
+    private int damage;
 
-    public void setStats(int _hpNpc, int _manaNpc, int _armorNpc, int _dmgNpc )
-    {
-        hpNpc = _hpNpc;
-        manaNpc = _manaNpc;
-        armorNpc = _armorNpc;
-        damageNpc = _dmgNpc;
-    }
-    public int getHpNPC()
-    {
-        return hpNpc;
-    }
-    public int getManaNPC()
-    {
-        return manaNpc;
-    }
-    public int getArmorNPC()
-    {
-        return armorNpc;
+    public void setStats(String _name, int _hp, int _mana, int _armor, int _damage) {
+        name = _name;
+        hp = _hp;
+        mana = _mana;
+        armor = _armor;
+        damage = _damage;
     }
 
-    public int getDamageNPC()
-    {
-        return damageNpc;
+    public String getName() {
+        return name;
     }
-    public void allStatsTogetherNPC()
-    {
-        System.out.println("HP = " + getHpNPC() +
-                "\nMANA = " + getManaNPC() +
-                "\nARMOR = " + getArmorNPC() +
-                "\nDAMAGE = " + getDamageNPC());
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void allStatsTogether() {
+        System.out.println("Class Name = " + getName() +
+                "\nHP = " + getHp() +
+                "\nMANA = " + getMana() +
+                "\nARMOR = " + getArmor() +
+                "\nDAMAGE = " + getDamage());
     }
 
 }
-*/
+
+

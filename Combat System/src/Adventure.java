@@ -1,12 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Adventure extends Setup {
+public class Adventure {
     private int steps;
-
-    Adventure() {
-        super();
-    }
 
     public void setDifficulty() {
         int difficulty;
@@ -38,15 +34,13 @@ public class Adventure extends Setup {
         return steps;
     }
 
-    public void initialize() {
-        Enemy encounter = new Enemy();
-        Enemy classType = new Enemy();
+    public void initialize(Enemy e) {
         ArrayList<Integer> path = new ArrayList<>();
         for (int i = 0; i < getDifficulty(); ) {
 
-            path.add(encounter.encounterClass());
+            path.add(e.encounterClass());
 
-            if (classType.classType >=0 && classType.classType <=2) {
+            if (e.classType  >=0 && e.classType <=2) {
                 battle();
             } else {
                 i++;
@@ -55,14 +49,14 @@ public class Adventure extends Setup {
 
     }
 
-    public void battle() {
-        Hero heroBattle = new Hero();
-        Enemy enemyBattle = new Enemy();
-        do {
-            heroBattle.heroAttack();
-            enemyBattle.enemyAttack();
 
-        } while (heroBattle.hpEnemy > 0 || enemyBattle.hpHero > 0);
+    public void battle(Hero h, Enemy e) {
+
+        do {
+            h.heroAttack();
+            e.enemyAttack();
+
+        } while (h.getHp() > 0 && e.getHp() > 0);
 
     }
 }

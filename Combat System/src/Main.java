@@ -1,13 +1,12 @@
 public class Main {
     public static void main(String[] args)
     {
-        Setup newGame = new Setup();
-        Setup.Hero chooseHero = newGame.new Hero();
+        Hero newHero = new Hero();
+        Enemy newEnemy = new Enemy();
         Adventure newAdventure = new Adventure();
 
-        chooseHero.selectClass();
+        newHero.selectClass();
         newAdventure.setDifficulty();
-        newAdventure.initialize();
-
+        newAdventure.initialize(newEnemy);
     }
 }
