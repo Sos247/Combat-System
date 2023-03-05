@@ -40,13 +40,12 @@ public class Adventure {
 
             path.add(e.encounterClass());
 
-            if (e.classType  >=0 && e.classType <=2) {
-                battle();
+            if (e.classType >= 0 && e.classType <= 2) {
+                battle(hero, enemy);
             } else {
                 i++;
             }
         }
-
     }
 
 
@@ -57,6 +56,5 @@ public class Adventure {
             e.enemyAttack();
 
         } while (h.getHp() > 0 && e.getHp() > 0);
-
     }
 }

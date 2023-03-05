@@ -1,7 +1,23 @@
-import java.util.Random;
-import java.util.Scanner;
-
 public class NPC {
+
+    enum Classes{
+        BARBARIAN("Barbarian",100,30,60,70),
+        ROGUE("Rogue",100,45,45,80),
+        WIZARD("Wizard",100,80,60,40);
+
+        private String name;
+        private int hp;
+        private int mana;
+        private int armor;
+        private int damage;
+        Classes(String _name, int _hp, int _mana, int _armor, int _damage){
+            name = _name;
+            hp = _hp;
+            mana = _mana;
+            armor = _armor;
+            damage = _damage;
+        }
+    }
     private String name;
     private int hp;
     private int mana;
