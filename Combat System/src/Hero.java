@@ -12,16 +12,16 @@ public class Hero extends NPC {
             selection = input.nextInt();
             switch (selection) {
                 case 1:
-                    NPC.Classes.BARBARIAN;
-                    allStatsTogether();
+                    Classes.BARBARIAN;
+                    Classes.allStatsTogether();
                     break;
                 case 2:
-                    NPC.Classes.ROGUE;
-                    allStatsTogether();
+                    Classes.ROGUE;
+                    Classes.allStatsTogether();
                     break;
                 case 3:
-                    NPC.Classes.WIZARD;
-                    allStatsTogether();
+                    Classes.WIZARD;
+                    Classes.allStatsTogether();
                     break;
                 default:
                     System.out.print("Select a Proper value : ");
