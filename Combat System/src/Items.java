@@ -28,7 +28,7 @@ public class Items {
                  new Items("Damage Booster",0,0,0,30)));
         ArrayList<Items> debuffs = new ArrayList<>(List.of(
                 new Items("Armor Debuff",0,0,20,0),
-                new Items("Damage Debuff",0,0,0,15));
+                new Items("Damage Debuff",0,0,0,15)));
 
     }
 
