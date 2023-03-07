@@ -22,7 +22,7 @@ public class Items {
     public void itemList(Items _recovers[], Items _boosts[], Items _debuffs[]) {
         ArrayList<Items> recovers = new ArrayList<>(List.of
                 (new Items("Health Pot",30,0,0,0),
-                 new Items("ManaPot",0,30,0,0)));
+                 new Items("Mana Pot",0,30,0,0)));
         ArrayList<Items> boosts = new ArrayList<>(List.of(
                  new Items("Armor Booster",0,0,30,0),
                  new Items("Damage Booster",0,0,0,30)));
