@@ -1,36 +1,7 @@
 import java.util.Random;
 
 public class Enemy extends NPC{
-
-    public int classType;
-    public int encounterClass() {
-        Random randSelect = new Random();
-        classType = randSelect.nextInt(4);
-        switch (classType) {
-
-            case 0:
-                System.out.print("You Encounter a ");
-                Classes.BARBARIAN;
-                Classes.allStatsTogether();
-                break;
-            case 1:
-                System.out.print("You Encounter a ");
-                Classes.ROGUE;
-                Classes.allStatsTogether();
-                break;
-            case 2:
-                System.out.print("You Encounter a ");
-                Classes.WIZARD
-                Classes.allStatsTogether();
-                break;
-            case 3:
-                System.out.println("You Encountered Nothing");
-                break;
-            default:
-                break;
-        }
-        return classType;
-    }
+    private classes enemy;
 
     public int enemyAttack(){
 
@@ -41,15 +12,15 @@ public class Enemy extends NPC{
         switch (eAttack) {
             case 0:
                 System.out.println("Enemy Attacked with Basic");
-                eAttack = getDamage();
+                eAttack = enemy.getDamage();
                 break;
             case 1:
                 System.out.println("Enemy Attacked with Slash");
-                eAttack= getDamage() + 15;
+                eAttack= enemy.getDamage() + 15;
                 break;
             case 2:
                 System.out.println("Enemy Attacked with Charge");
-                eAttack = getDamage() +20;
+                eAttack = enemy.getDamage() +20;
                 break;
         }
         return eAttack;
