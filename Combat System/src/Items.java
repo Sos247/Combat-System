@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Items {
     private String itemName;
@@ -39,7 +38,7 @@ public class Items {
         boostArray = boosts;
         debuffsArray = debuffs;
     }
-    public int itemDrop(ArrayList i)
+    public void itemDrop()
     {
         int dice;
         Random diceRoll = new Random();
@@ -69,7 +68,7 @@ public class Items {
                 System.out.println("You Found a " + debuffsArray.get(1));
             }
         }
-        return dice;
+        //return dice;
     }
 
 }

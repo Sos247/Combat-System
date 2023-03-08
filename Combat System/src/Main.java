@@ -8,5 +8,8 @@ public class Main {
         newHero.selectClass();
         newAdventure.setDifficulty();
         newAdventure.initialize(newHero, newEnemy);
+
+
+
     }
 }

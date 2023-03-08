@@ -1,6 +1,6 @@
 public class NPC {
 
-    enum Classes{
+enum classes {
         BARBARIAN("Barbarian",100,30,60,70),
         ROGUE("Rogue",100,45,45,80),
         WIZARD("Wizard",100,80,60,40);
@@ -10,7 +10,7 @@ public class NPC {
         private int mana;
         private int armor;
         private int damage;
-        Classes(String _name, int _hp, int _mana, int _armor, int _damage){
+        private classes(String _name, int _hp, int _mana, int _armor, int _damage){
             name = _name;
             hp = _hp;
             mana = _mana;
@@ -45,7 +45,15 @@ public class NPC {
                     "\nARMOR = " + getArmor() +
                     "\nDAMAGE = " + getDamage());
         }
+   /* public void Classtest(classes barbarian, classes rogue, classes wizard)
+    {
+        barbarian = classes.BARBARIAN;
+        rogue = classes.ROGUE;
+        wizard = classes.WIZARD;
+    } */
     }
+
+
 }
 
 

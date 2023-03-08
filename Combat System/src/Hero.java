@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
-public class Hero extends NPC {
+public class Hero extends NPC{
 
+    private classes hero;
     public void selectClass() {
 
         int selection;
@@ -12,16 +13,17 @@ public class Hero extends NPC {
             selection = input.nextInt();
             switch (selection) {
                 case 1:
-                    Classes.BARBARIAN;
-                    Classes.allStatsTogether();
+                    hero = classes.BARBARIAN;
+                    hero.allStatsTogether();
                     break;
                 case 2:
-                    Classes.ROGUE;
-                    Classes.allStatsTogether();
+                    hero = classes.ROGUE;
+                    hero.allStatsTogether();
                     break;
                 case 3:
-                    Classes.WIZARD;
-                    Classes.allStatsTogether();
+                    hero = classes.WIZARD;
+                    hero.allStatsTogether();
+
                     break;
                 default:
                     System.out.print("Select a Proper value : ");
@@ -39,15 +41,15 @@ public class Hero extends NPC {
         switch (hAttack) {
             case 1:
                 System.out.println("Basic");
-                hAttack = getDamage();
+                hAttack = hero.getDamage();
                 break;
             case 2:
                 System.out.println("Slash");
-                hAttack = getDamage() + 15;
+                hAttack = hero.getDamage() + 15;
                 break;
             case 3:
                 System.out.println("Charge");
-                hAttack = getDamage() + 20;
+                hAttack = hero.getDamage() + 20;
                 break;
             default:
                 System.out.print("Select a Proper value : ");
