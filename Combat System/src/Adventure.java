@@ -2,11 +2,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Adventure extends NPC{
-
-    private classes enemy;
-    private Items item;
+public class Adventure {
     int encounterRoll;
+    Items item ;
 
     private int steps;
 
@@ -35,14 +33,13 @@ public class Adventure extends NPC{
         } while (difficulty > 3 || difficulty < 1);
 
     }
-
     public int getDifficulty() {
         return steps;
     }
 
     public void initialize(Hero h, Enemy e) {
         ArrayList<Integer> path = new ArrayList<>();
-        for (int i = 0; i < getDifficulty(); ) {
+        for (int i = 1; i < getDifficulty(); ) {
             path.add(encounter());
             if (encounterRoll >= 0 && encounterRoll <= 2) {
               battle(h, e);
@@ -52,6 +49,7 @@ public class Adventure extends NPC{
         }
     }
     public int encounter() {
+        NPC.classes enemy;
         Random randSelect = new Random();
         encounterRoll = randSelect.nextInt(6);
         switch (encounterRoll) {
@@ -81,7 +79,6 @@ public class Adventure extends NPC{
     }
 
     public void battle(Hero h, Enemy e) {
-
         do {
             h.heroAttack();
             e.enemyAttack();

@@ -38,37 +38,37 @@ public class Items {
         boostArray = boosts;
         debuffsArray = debuffs;
     }
-    public void itemDrop()
+    public Items itemDrop()
     {
+        Items item = new Items("",0,0,0,0);
         int dice;
         Random diceRoll = new Random();
         dice = diceRoll.nextInt(100);
         if(dice >= 0 && dice <=40) {
             diceRoll.nextInt(2);
             if(dice == 1) {
-
-                System.out.println("You Found a " + recoversArray.get(0));
+                System.out.println("You Found a " + item.recoversArray.get(0));
             }else {
-                System.out.println("You Found a " + recoversArray.get(1));
+                System.out.println("You Found a " + item.recoversArray.get(1));
             }
         } else if (dice > 40 && dice <=80){
             diceRoll.nextInt(2);
             if(dice == 1) {
 
-                System.out.println("You Found a " + boostArray.get(0));
+                System.out.println("You Found a " + item.boostArray.get(0));
             }else {
-                System.out.println("You Found a " + boostArray.get(1));
+                System.out.println("You Found a " + item.boostArray.get(1));
             }
         }else{
             diceRoll.nextInt(2);
             if(dice == 1) {
 
-                System.out.println("You Found a " + debuffsArray.get(0));
+                System.out.println("You Found a " + item.debuffsArray.get(0));
             }else {
-                System.out.println("You Found a " + debuffsArray.get(1));
+                System.out.println("You Found a " + item.debuffsArray.get(1));
             }
         }
-        //return dice;
+       return item;
     }
 
 }
