@@ -3,10 +3,52 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Adventure {
+
+    public Hero hero;
+
     int encounterRoll;
     Items item ;
 
     private int steps;
+
+    public void init() {
+
+        hero = selectClass();
+    }
+
+    public Hero selectClass() {
+
+        int selection;
+
+        Hero hero;
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Select Your Class \n 1.Barbarian \n 2.Rogue \n 3.Wizard");
+
+        System.out.print("Choice : ");
+
+        do {
+            selection = input.nextInt();
+            switch (selection) {
+                case 1:
+                    hero = new Hero(NPCType.BARBARIAN, "", 0, 0, 0, 0);
+                    break;
+                case 2:
+                    hero = new Hero(NPCType.ROGUE, "", 0, 0, 0, 0);
+                    break;
+                case 3:
+                    hero = new Hero(NPCType.WIZARD, "", 0, 0, 0, 0);
+                    break;
+                default:
+                    System.out.print("Select a Proper value : ");
+                    
+                    break;
+            }
+        } while (selection > 3 || selection < 1);
+
+        return hero;
+    }
 
     public void setDifficulty() {
         int difficulty;

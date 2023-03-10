@@ -1,35 +1,14 @@
 import java.util.Scanner;
 
-public class Hero extends NPC{
+public class Hero extends NPC {
 
-    private classes hero;
-    public void selectClass() {
+    public NPCType type;
 
-        int selection;
-        Scanner input = new Scanner(System.in);
-        System.out.println("Select Your Class \n 1.Barbarian \n 2.Rogue \n 3.Wizard");
-        System.out.print("Choice : ");
-        do {
-            selection = input.nextInt();
-            switch (selection) {
-                case 1:
-                    hero = classes.BARBARIAN;
-                    hero.allStatsTogether();
-                    break;
-                case 2:
-                    hero = classes.ROGUE;
-                    hero.allStatsTogether();
-                    break;
-                case 3:
-                    hero = classes.WIZARD;
-                    hero.allStatsTogether();
+    public Hero(NPCType _type, String _name, int _hp, int _mana, int _armor, int _damage) {
 
-                    break;
-                default:
-                    System.out.print("Select a Proper value : ");
-                    break;
-            }
-        } while (selection > 3 || selection < 1);
+        super(_name, _hp, _mana, _armor, _damage);
+        
+        type = _type;
     }
 
     public int heroAttack() {
