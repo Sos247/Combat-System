@@ -17,15 +17,15 @@ public class Enemy extends NPC{
         switch (eAttack) {
             case 0:
                 System.out.println("Enemy Attacked with Basic");
-                eAttack = etype.getDamage();
+                eAttack = getDamage();
                 break;
             case 1:
                 System.out.println("Enemy Attacked with Slash");
-                eAttack= enemy.getDamage() + 15;
+                eAttack= getDamage() + 15;
                 break;
             case 2:
                 System.out.println("Enemy Attacked with Charge");
-                eAttack = enemy.getDamage() +20;
+                eAttack = getDamage() +20;
                 break;
         }
         return eAttack;

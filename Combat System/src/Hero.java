@@ -20,15 +20,15 @@ public class Hero extends NPC {
         switch (hAttack) {
             case 1:
                 System.out.println("Basic");
-                hAttack = hero.getDamage();
+                hAttack = getDamage();
                 break;
             case 2:
                 System.out.println("Slash");
-                hAttack = hero.getDamage() + 15;
+                hAttack = getDamage() + 15;
                 break;
             case 3:
                 System.out.println("Charge");
-                hAttack = hero.getDamage() + 20;
+                hAttack = getDamage() + 20;
                 break;
             default:
                 System.out.print("Select a Proper value : ");

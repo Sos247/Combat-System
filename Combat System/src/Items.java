@@ -8,6 +8,7 @@ public class Items {
     private int itemMana;
     private int itemArmor;
     private int itemDamage;
+    private  Items item;
 
     private ArrayList recoversArray;
     private ArrayList boostArray;
@@ -40,7 +41,6 @@ public class Items {
     }
     public Items itemDrop()
     {
-        Items item = new Items("",0,0,0,0);
         int dice;
         Random diceRoll = new Random();
         dice = diceRoll.nextInt(100);
@@ -57,7 +57,7 @@ public class Items {
 
                 System.out.println("You Found a " + item.boostArray.get(0));
             }else {
-                System.out.println("You Found a " + item.boostArray.get(1));
+                System.out.println("You Found a " + boostArray.get(1));
             }
         }else{
             diceRoll.nextInt(2);
