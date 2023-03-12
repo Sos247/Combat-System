@@ -6,18 +6,18 @@ public class Adventure {
 
     public Hero hero;
     public Enemy enemy;
-
+    public Civilian civilian;
+    public Animal animal;
     int encounterRoll;
-    Items item;
-
+    public Items item;
     private int steps;
-
     public void init() {
 
         setDifficulty();
         hero = selectClass();
-        initialize(hero, enemy);
+        initialize();
     }
+
     public void setDifficulty() {
         int difficulty;
         Scanner input = new Scanner(System.in);
@@ -43,9 +43,11 @@ public class Adventure {
         } while (difficulty > 3 || difficulty < 1);
 
     }
+
     public int getDifficulty() {
         return steps;
     }
+
     public Hero selectClass() {
 
         int selection;
@@ -76,50 +78,71 @@ public class Adventure {
 
         return hero;
     }
-    public void initialize(Hero h, Enemy e) {
+
+    public void initialize() {
         ArrayList<Enemy> path = new ArrayList<>();
-        for (int i = 1; i < getDifficulty(); ) {
+        for (int i = 1; i < getDifficulty(); i++) {
             path.add(encounter());
-            if (encounterRoll >= 0 && encounterRoll <= 2) {
-                //battle(h, e);
-            } else {
-                i++;
             }
         }
-    }
 
     public Enemy encounter() {
-
-        Random randSelect = new Random();
-        encounterRoll = randSelect.nextInt(6);
-        switch (encounterRoll) {
-            case 0:
-                System.out.print("You Encounter a ");
-                enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
-                break;
-            case 1:
-                System.out.print("You Encounter a ");
-                enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
-                break;
-            case 2:
-                System.out.print("You Encounter a ");
-                enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
-                break;
-            case 3:
-                System.out.println("You Encountered Nothing");
-                break;
-            default:
-                item.itemDrop();
-                break;
+        try {
+            Random randSelect = new Random();
+            encounterRoll = randSelect.nextInt(7);
+            switch (encounterRoll) {
+                case 0:
+                    enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
+                    System.out.print("You Encounter a " + enemy);
+                    battle();
+                    break;
+                case 1:
+                    enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
+                    System.out.print("You Encounter a " + enemy);
+                    battle();
+                    break;
+                case 2:
+                    enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
+                    System.out.print("You Encounter a " + enemy);
+                    battle();
+                    break;
+                case 3:
+                    System.out.println("You Encountered Nothing");
+                    break;
+                case 4:
+                    civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
+                    System.out.println("Civilian" + civilian);
+                    civilian.civilAction();
+                    item.itemDrop();
+                    break;
+                case 5:
+                    animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
+                    System.out.println("Animal" + animal);
+                    battle();
+                    break;
+                default:
+                    item = item.itemDrop();
+                    break;
+            }
+            return enemy;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return enemy;
     }
 
-//    public void battle(Hero h, Enemy e) {
-//        do {
-//            h.heroAttack();
-//            e.enemyAttack();
-//
-//        } while (h.getHp() > 0 && e.getHp() > 0);
-//    }
-}
+    public void battle() {
+        if (encounterRoll == 5) {
+            do {
+                hero.heroAttack();
+                animal.animalAttack();
+            } while (hero.getHp() > 0 && animal.getHp() > 0);
+
+        } else {
+            do {
+                hero.heroAttack();
+                enemy.enemyAttack();
+            } while (hero.getHp() > 0 && enemy.getHp() > 0);
+        }
+        }
+    }
+

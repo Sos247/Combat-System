@@ -4,5 +4,9 @@ enum NPCType {
 
     ROGUE,
 
-    WIZARD
+    WIZARD,
+
+    CIVILIAN,
+
+    ANIMAL
 }
