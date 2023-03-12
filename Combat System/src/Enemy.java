@@ -1,7 +1,12 @@
 import java.util.Random;
 
 public class Enemy extends NPC{
-    private classes enemy;
+
+    public NPCType etype;
+    public Enemy(NPCType _etype, String _name, int _hp, int _mana, int _armor, int _damage){
+        super(_name, _hp, _mana, _armor, _damage);
+        etype = _etype;
+    }
 
     public int enemyAttack(){
 
@@ -12,7 +17,7 @@ public class Enemy extends NPC{
         switch (eAttack) {
             case 0:
                 System.out.println("Enemy Attacked with Basic");
-                eAttack = enemy.getDamage();
+                eAttack = etype.getDamage();
                 break;
             case 1:
                 System.out.println("Enemy Attacked with Slash");
