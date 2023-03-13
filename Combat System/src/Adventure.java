@@ -93,21 +93,21 @@ public class Adventure {
             switch (encounterRoll) {
                 case 0:
                     enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
-                    System.out.print("You Encounter a " + enemy);
+                    System.out.println("You Encounter a " + enemy);
                     battle();
                     break;
                 case 1:
                     enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
-                    System.out.print("You Encounter a " + enemy);
+                    System.out.println("You Encounter a " + enemy);
                     battle();
                     break;
                 case 2:
                     enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
-                    System.out.print("You Encounter a " + enemy);
+                    System.out.println("You Encounter a " + enemy);
                     battle();
                     break;
                 case 3:
-                    System.out.println("You Encountered Nothing");
+                    item = item.itemDrop();
                     break;
                 case 4:
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
@@ -121,7 +121,7 @@ public class Adventure {
                     battle();
                     break;
                 default:
-                    item = item.itemDrop();
+                    System.out.println("You Encountered Nothing");
                     break;
             }
             return enemy;
