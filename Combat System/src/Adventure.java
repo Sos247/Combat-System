@@ -94,17 +94,20 @@ public class Adventure {
                 case 0:
                     enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
                     System.out.println("You Encounter a " + enemy);
-                    battle();
+                    enemy.allStatsTogether();
+                    battle(hero,enemy,animal);
                     break;
                 case 1:
                     enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
                     System.out.println("You Encounter a " + enemy);
-                    battle();
+                    enemy.allStatsTogether();
+                    battle(hero,enemy,animal);
                     break;
                 case 2:
                     enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
                     System.out.println("You Encounter a " + enemy);
-                    battle();
+                    enemy.allStatsTogether();
+                    battle(hero,enemy,animal);
                     break;
                 case 3:
                     item = item.itemDrop();
@@ -113,12 +116,14 @@ public class Adventure {
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
                     System.out.println("Civilian" + civilian);
                     civilian.civilAction();
+                    civilian.allStatsTogether();
                     item.itemDrop();
                     break;
                 case 5:
                     animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
                     System.out.println("Animal" + animal);
-                    battle();
+                    animal.allStatsTogether();
+                    battle(hero,enemy,animal);
                     break;
                 default:
                     System.out.println("You Encountered Nothing");
@@ -130,18 +135,24 @@ public class Adventure {
         }
     }
 
-    public void battle() {
+    public void battle(Hero h, Enemy e, Animal a) {
         if (encounterRoll == 5) {
             do {
-                hero.heroAttack();
-                animal.animalAttack();
-            } while (hero.getHp() > 0 && animal.getHp() > 0);
+                a.hp -= h.heroAttack();
+                System.out.println("Hp remain = "+ a.hp);
+
+                h.hp -= a.animalAttack();
+                System.out.println("Your Hp = " + h.hp);
+            } while (h.getHp() > 0 && a.getHp() > 0);
 
         } else {
             do {
-                hero.heroAttack();
-                enemy.enemyAttack();
-            } while (hero.getHp() > 0 && enemy.getHp() > 0);
+                e.hp -= h.heroAttack();
+                System.out.println("Hp remain = "+ e.hp);
+
+                h.hp -= enemy.enemyAttack();
+                System.out.println("Your Hp = " + h.hp);
+            } while (h.getHp() > 0 && e.getHp() > 0);
         }
         }
     }

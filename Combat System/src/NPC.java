@@ -1,10 +1,10 @@
 public class NPC {
 
     private String name;
-    private int hp;
+    public int hp;
     private int mana;
-    private int armor;
-    private int damage;
+    public int armor;
+    public int damage;
 
     public NPC(String _name, int _hp, int _mana, int _armor, int _damage) {
 
