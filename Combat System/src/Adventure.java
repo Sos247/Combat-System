@@ -9,8 +9,9 @@ public class Adventure {
     public Civilian civilian;
     public Animal animal;
     int encounterRoll;
-    public Items item;
+    public Items item ;
     private int steps;
+    private boolean healthCheck = true;
     public void init() {
 
         setDifficulty();
@@ -88,6 +89,7 @@ public class Adventure {
 
     public Enemy encounter() {
         try {
+            healthChecker();
             Random randSelect = new Random();
             encounterRoll = randSelect.nextInt(7);
             switch (encounterRoll) {
@@ -110,13 +112,13 @@ public class Adventure {
                     battle(hero,enemy,animal);
                     break;
                 case 3:
-                    item = item.itemDrop();
+                    item.itemDrop();
                     break;
                 case 4:
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
                     System.out.println("Civilian" + civilian);
-                    civilian.civilAction();
                     civilian.allStatsTogether();
+                    civilian.civilAction();
                     item.itemDrop();
                     break;
                 case 5:
@@ -143,7 +145,7 @@ public class Adventure {
 
                 h.hp -= a.animalAttack();
                 System.out.println("Your Hp = " + h.hp);
-            } while (h.getHp() > 0 && a.getHp() > 0);
+            } while (h.getHp() !=0 && a.getHp() != 0);
 
         } else {
             do {
@@ -152,8 +154,16 @@ public class Adventure {
 
                 h.hp -= enemy.enemyAttack();
                 System.out.println("Your Hp = " + h.hp);
-            } while (h.getHp() > 0 && e.getHp() > 0);
-        }
+            } while (h.getHp() != 0 && e.getHp() != 0);
         }
     }
+
+    public void healthChecker(){
+        if(hero.getHp() <= 0)
+        {
+            healthCheck = false;
+            init();
+        }
+    }
+}
 
