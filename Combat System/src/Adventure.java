@@ -9,7 +9,7 @@ public class Adventure {
     public Civilian civilian;
     public Animal animal;
     int encounterRoll;
-    public Items item ;
+    public Items item = new Items("default", 10,10,10,10);
     private int steps;
     private boolean healthCheck = true;
     public void init() {
@@ -112,14 +112,14 @@ public class Adventure {
                     battle(hero,enemy,animal);
                     break;
                 case 3:
-                    item.itemDrop();
+                    item = item.itemDrop();
                     break;
                 case 4:
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
                     System.out.println("Civilian" + civilian);
                     civilian.allStatsTogether();
                     civilian.civilAction();
-                    item.itemDrop();
+                    item = item.itemDrop();
                     break;
                 case 5:
                     animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
@@ -154,7 +154,7 @@ public class Adventure {
 
                 h.hp -= enemy.enemyAttack();
                 System.out.println("Your Hp = " + h.hp);
-            } while (h.getHp() != 0 && e.getHp() != 0);
+            } while (h.getHp() > 0 && e.getHp() > 0);
         }
     }
 

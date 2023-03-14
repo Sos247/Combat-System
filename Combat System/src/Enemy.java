@@ -25,7 +25,7 @@ public class Enemy extends NPC{
                 break;
             case 2:
                 System.out.println("Enemy Attacked with Charge");
-                eAttack = getDamage() +20;
+                eAttack = getDamage() + 20;
                 break;
         }
         return eAttack;
