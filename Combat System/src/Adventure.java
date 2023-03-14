@@ -13,6 +13,8 @@ public class Adventure {
 
     private int steps;
     private boolean healthCheck = true;
+    private boolean enemyHealthCheck = true;
+    private boolean animalHealthCheck = true;
     public void init() {
 
         setDifficulty();
@@ -90,7 +92,7 @@ public class Adventure {
 
     public Enemy encounter() {
         try {
-            healthChecker();
+            //healthChecker();
             Random randSelect = new Random();
             encounterRoll = randSelect.nextInt(7);
             switch (encounterRoll) {
@@ -143,18 +145,20 @@ public class Adventure {
             do {
                 a.hp -= h.heroAttack();
                 System.out.println("Hp remain = "+ a.hp);
-
+                animalHealthChecker();
                 h.hp -= a.animalAttack();
                 System.out.println("Your Hp = " + h.hp);
+                healthChecker();
             } while (h.getHp() !=0 && a.getHp() != 0);
 
         } else {
             do {
                 e.hp -= h.heroAttack();
                 System.out.println("Hp remain = "+ e.hp);
-
+                enemyHealthChecker();
                 h.hp -= enemy.enemyAttack();
                 System.out.println("Your Hp = " + h.hp);
+                healthChecker();
             } while (h.getHp() > 0 && e.getHp() > 0);
         }
     }
@@ -162,8 +166,23 @@ public class Adventure {
     public void healthChecker(){
         if(hero.getHp() <= 0)
         {
+            System.out.println("You Died");
             healthCheck = false;
             init();
+        }
+    }
+    public void enemyHealthChecker(){
+        if(enemy.getHp() <= 0)
+        {
+            enemyHealthCheck = false;
+            encounter();
+        }
+    }
+    public void animalHealthChecker(){
+        if(animal.getHp() <= 0)
+        {
+            animalHealthCheck = false;
+            encounter();
         }
     }
 }
