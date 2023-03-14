@@ -37,6 +37,7 @@ public class Items {
 
     }
     public Items itemDrop() {
+        itemList();
             Items item;
             int dice;
             Random diceRoll = new Random();

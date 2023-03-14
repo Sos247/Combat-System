@@ -113,7 +113,6 @@ public class Adventure {
                     battle(hero,enemy,animal);
                     break;
                 case 3:
-                    item.itemList();
                     item = item.itemDrop();
                     break;
                 case 4:
@@ -121,7 +120,6 @@ public class Adventure {
                     System.out.println("Civilian" + civilian);
                     civilian.allStatsTogether();
                     civilian.civilAction();
-                    item.itemList();
                     item = item.itemDrop();
                     break;
                 case 5:
