@@ -6,5 +6,6 @@ public class Civilian extends NPC{
     }
     public void civilAction(){
         System.out.println("Hello Traveler, here is a free item for your journey");
+
     }
 }

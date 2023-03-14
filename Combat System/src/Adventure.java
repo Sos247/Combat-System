@@ -96,19 +96,19 @@ public class Adventure {
             switch (encounterRoll) {
                 case 0:
                     enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
-                    System.out.println("You Encounter a " + enemy);
+                    System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
                     battle(hero,enemy,animal);
                     break;
                 case 1:
                     enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
-                    System.out.println("You Encounter a " + enemy);
+                    System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
                     battle(hero,enemy,animal);
                     break;
                 case 2:
                     enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
-                    System.out.println("You Encounter a " + enemy);
+                    System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
                     battle(hero,enemy,animal);
                     break;
@@ -117,14 +117,14 @@ public class Adventure {
                     break;
                 case 4:
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
-                    System.out.println("Civilian" + civilian);
+                    System.out.println("Civilian" + civilian.getName());
                     civilian.allStatsTogether();
                     civilian.civilAction();
                     item = item.itemDrop();
                     break;
                 case 5:
                     animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
-                    System.out.println("Animal" + animal);
+                    System.out.println("Animal" + animal.getName());
                     animal.allStatsTogether();
                     battle(hero,enemy,animal);
                     break;

@@ -24,6 +24,26 @@ public class Items {
 
     }
 
+    public String getItemName() {
+        return itemName;
+    }
+
+    public int getItemHp() {
+        return itemHp;
+    }
+
+    public int getItemMana() {
+        return itemMana;
+    }
+
+    public int getItemArmor() {
+        return itemArmor;
+    }
+
+    public int getItemDamage() {
+        return itemDamage;
+    }
+
     public void itemList() {
 
         recoversArray.add(new Items("Health Pot",30,0,0,0));
@@ -46,28 +66,28 @@ public class Items {
                 diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = recoversArray.get(0);
-                    System.out.println("You Found a " + item);
+                    System.out.println("You Found a " + item.getItemName());
                 } else {
                     item = recoversArray.get(1);
-                    System.out.println("You Found a " + item);
+                    System.out.println("You Found a " + item.getItemName());
                 }
             } else if (dice > 40 && dice <= 80) {
                 diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = boostArray.get(0);
-                    System.out.println("You Found a " + item);
+                    System.out.println("You Found a " + item.getItemName());
                 } else {
                     item = boostArray.get(1);
-                    System.out.println("You Found a " + item);
+                    System.out.println("You Found a " + item.getItemName());
                 }
             } else {
                 diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = debuffsArray.get(0);
-                    System.out.println("You Found a " + item);
+                    System.out.println("You Found a " + item.getItemName());
                 } else {
                     item = debuffsArray.get(1);
-                    System.out.println("You Found a " + item);
+                    System.out.println("You Found a " + item.getItemName());
                 }
             }
         return item;
