@@ -9,9 +9,9 @@ public class Items {
     private int itemArmor;
     private int itemDamage;
 
-    private ArrayList<Items> recoversArray = new ArrayList<>();
-    private ArrayList<Items> boostArray = new ArrayList<>();
-    private ArrayList<Items> debuffsArray = new ArrayList<>();
+    List<Items> recoversArray = new ArrayList<>();
+    List<Items> boostArray = new ArrayList<>();
+    List<Items> debuffsArray = new ArrayList<>();
 
 
     Items(String _name, int _hp, int _mana, int _armor, int _damage){

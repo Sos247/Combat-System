@@ -10,6 +10,7 @@ public class Adventure {
     public Animal animal;
     int encounterRoll;
     public Items item = new Items("default", 10,10,10,10);
+
     private int steps;
     private boolean healthCheck = true;
     public void init() {
@@ -112,6 +113,7 @@ public class Adventure {
                     battle(hero,enemy,animal);
                     break;
                 case 3:
+                    item.itemList();
                     item = item.itemDrop();
                     break;
                 case 4:
@@ -119,6 +121,7 @@ public class Adventure {
                     System.out.println("Civilian" + civilian);
                     civilian.allStatsTogether();
                     civilian.civilAction();
+                    item.itemList();
                     item = item.itemDrop();
                     break;
                 case 5:
