@@ -12,7 +12,7 @@ public class Adventure {
     public Items item = new Items("default", 10,10,10,10);
 
     private int steps;
-    private boolean healthCheck = true;
+    private boolean healthCheck = 0;
     private boolean enemyHealthCheck = true;
     private boolean animalHealthCheck = true;
     public void init() {
