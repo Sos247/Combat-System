@@ -9,12 +9,13 @@ public class Adventure {
     public Civilian civilian;
     public Animal animal;
     int encounterRoll;
-    public Items item = new Items("default", 10,10,10,10);
+    public Items item = new Items("default", 10, 10, 10, 10);
 
     private int steps;
-    private boolean healthCheck = 0;
+    private boolean healthCheck = true;
     private boolean enemyHealthCheck = true;
     private boolean animalHealthCheck = true;
+
     public void init() {
 
         setDifficulty();
@@ -79,7 +80,6 @@ public class Adventure {
                     break;
             }
         } while (selection > 3 || selection < 1);
-
         return hero;
     }
 
@@ -87,8 +87,8 @@ public class Adventure {
         ArrayList<Enemy> path = new ArrayList<>();
         for (int i = 1; i < getDifficulty(); i++) {
             path.add(encounter());
-            }
         }
+    }
 
     public Enemy encounter() {
         try {
@@ -100,19 +100,19 @@ public class Adventure {
                     enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
                     System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
-                    battle(hero,enemy,animal);
+                    battle(hero, enemy, animal);
                     break;
                 case 1:
                     enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
                     System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
-                    battle(hero,enemy,animal);
+                    battle(hero, enemy, animal);
                     break;
                 case 2:
                     enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
                     System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
-                    battle(hero,enemy,animal);
+                    battle(hero, enemy, animal);
                     break;
                 case 3:
                     item = item.itemDrop();
@@ -128,7 +128,7 @@ public class Adventure {
                     animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
                     System.out.println("Animal" + animal.getName());
                     animal.allStatsTogether();
-                    battle(hero,enemy,animal);
+                    battle(hero, enemy, animal);
                     break;
                 default:
                     System.out.println("You Encountered Nothing");
@@ -144,43 +144,45 @@ public class Adventure {
         if (encounterRoll == 5) {
             do {
                 a.hp -= h.heroAttack();
-                System.out.println("Hp remain = "+ a.hp);
                 animalHealthChecker();
+                System.out.println("Hp remain = " + a.hp);
                 h.hp -= a.animalAttack();
-                System.out.println("Your Hp = " + h.hp);
                 healthChecker();
-            } while (h.getHp() !=0 && a.getHp() != 0);
+                System.out.println("Your Hp = " + h.hp);
+            } while (h.getHp() != 0 && a.getHp() != 0);
 
         } else {
             do {
                 e.hp -= h.heroAttack();
-                System.out.println("Hp remain = "+ e.hp);
                 enemyHealthChecker();
+                System.out.println("Hp remain = " + e.hp);
                 h.hp -= enemy.enemyAttack();
-                System.out.println("Your Hp = " + h.hp);
                 healthChecker();
+                System.out.println("Your Hp = " + h.hp);
             } while (h.getHp() > 0 && e.getHp() > 0);
         }
     }
 
-    public void healthChecker(){
-        if(hero.getHp() <= 0)
-        {
+    public void healthChecker() {
+        if (hero.getHp() <= 0) {
+            hero.hp = 0;
             System.out.println("You Died");
             healthCheck = false;
             init();
         }
     }
-    public void enemyHealthChecker(){
-        if(enemy.getHp() <= 0)
-        {
+
+    public void enemyHealthChecker() {
+        if (enemy.getHp() <= 0) {
+            enemy.hp = 0;
             enemyHealthCheck = false;
             encounter();
         }
     }
-    public void animalHealthChecker(){
-        if(animal.getHp() <= 0)
-        {
+
+    public void animalHealthChecker() {
+        if (animal.getHp() <= 0) {
+            animal.hp = 0;
             animalHealthCheck = false;
             encounter();
         }
