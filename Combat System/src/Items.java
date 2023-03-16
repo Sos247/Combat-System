@@ -68,7 +68,7 @@ public class Items {
             Random diceRoll = new Random();
             dice = diceRoll.nextInt(100);
             if (dice <= 40) {
-                diceRoll.nextInt(2);
+                dice = diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = recoversArray.get(0);
                     System.out.println("You Found a " + item.getItemName());
@@ -77,7 +77,7 @@ public class Items {
                     System.out.println("You Found a " + item.getItemName());
                 }
             } else if (dice > 40 && dice <= 80) {
-                diceRoll.nextInt(2);
+               dice = diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = boostArray.get(0);
                     System.out.println("You Found a " + item.getItemName());
@@ -86,7 +86,7 @@ public class Items {
                     System.out.println("You Found a " + item.getItemName());
                 }
             } else {
-                diceRoll.nextInt(2);
+                dice = diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = debuffsArray.get(0);
                     System.out.println("You Found a " + item.getItemName());
