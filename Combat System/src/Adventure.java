@@ -84,7 +84,7 @@ public class Adventure {
 
     public void initialize() {
         ArrayList<Enemy> path = new ArrayList<>();
-        for (int i = 1; i < getDifficulty(); i++) {
+        for (int i = 1; i <= getDifficulty(); i++) {
             path.add(encounter());
         }
     }
@@ -147,48 +147,64 @@ public class Adventure {
         if (encounterRoll == 5) {
             do {
                 a.hp -= h.heroAttack();
-                animalHealthChecker();
-                System.out.println("Hp remain = " + a.hp);
+                if (animal.getHp() <= 0) {
+            animal.hp = 0;
+            System.out.println(animal.getName() + " Died, the journey continues");
+            break;
+        }
+                System.out.println(animal.getName() + " Hp remain = " + a.hp);
                 h.hp -= a.animalAttack();
-                healthChecker();
+                if (hero.getHp() <= 0) {
+                    hero.hp = 0;
+                    System.out.println("You Died, Reset the Game NOW");
+                    init();
+                }
                 System.out.println("Your Hp = " + h.hp);
             } while (h.getHp() != 0 && a.getHp() != 0);
 
         } else {
             do {
                 e.hp -= h.heroAttack();
-                enemyHealthChecker();
-                System.out.println(e.getName() + "Hp remain = " + e.hp);
+                if (enemy.getHp() <= 0) {
+            enemy.hp = 0;
+            System.out.println(enemy.getName() + " Died, the journey continues");
+            break;
+        }
+                System.out.println(e.getName() + " Hp remain = " + e.hp);
                 h.hp -= enemy.enemyAttack();
-                healthChecker();
+                if (hero.getHp() <= 0) {
+            hero.hp = 0;
+            System.out.println("You Died, Reset the Game NOW");
+            init();
+        }
+                //healthChecker();
                 System.out.println("Your Hp = " + h.hp);
             } while (h.getHp() > 0 && e.getHp() > 0);
         }
     }
 
-    public void healthChecker() {
-        if (hero.getHp() <= 0) {
-            hero.hp = 0;
-            System.out.println("You Died, Reset the Game NOW");
-            init();
-        }
-    }
-
-    public void enemyHealthChecker() {
-        if (enemy.getHp() <= 0) {
-            enemy.hp = 0;
-            System.out.println(enemy.getName() + " Died, the journey continues");
-            initialize();
-        }
-    }
-
-    public void animalHealthChecker() {
-        if (animal.getHp() <= 0) {
-            animal.hp = 0;
-            System.out.println(animal.getName() + " Died");
-            initialize();
-        }
-    }
+//    public void healthChecker() {
+//        if (hero.getHp() <= 0) {
+//            hero.hp = 0;
+//            System.out.println("You Died, Reset the Game NOW");
+//            init();
+//        }
+//    }
+//    public void enemyHealthChecker() {
+//        if (enemy.getHp() <= 0) {
+//            enemy.hp = 0;
+//            System.out.println(enemy.getName() + " Died, the journey continues");
+//            //initialize();
+//        }
+//    }
+//
+//    public void animalHealthChecker() {
+//        if (animal.getHp() <= 0) {
+//            animal.hp = 0;
+//            System.out.println(animal.getName() + " Died, the journey continues");
+//            //initialize();
+//        }
+//    }
 
     public void playerInventory() {
         if (encounterRoll == 3 || encounterRoll == 4) {
