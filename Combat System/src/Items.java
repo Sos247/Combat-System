@@ -45,15 +45,20 @@ public class Items {
     }
 
     public void itemList() {
+        Items healthPot = new Items("Health Pot",30,0,0,0);
+        Items manaPot = new Items("Mana Pot",0,30,0,0);
+        recoversArray.add(healthPot);
+        recoversArray.add(manaPot);
 
-        recoversArray.add(new Items("Health Pot",30,0,0,0));
-        recoversArray.add(new Items("Mana Pot",0,30,0,0));
+        Items armorBooster = new Items("Armor Booster",0,0,30,0);
+        Items damageBoost = new Items("Armor Booster",0,0,0,30);
+        boostArray.add(armorBooster);
+        boostArray.add(damageBoost);
 
-        boostArray.add(new Items("Armor Booster",0,0,30,0));
-        boostArray.add(new Items("Damage Booster",0,0,0,30));
-
-        debuffsArray.add(new Items("Armor Debuff",0,0,20,0));
-        debuffsArray.add(new Items("Damage Debuff",0,0,0,15));
+        Items armorDebuff = new Items("Armor Booster",0,0,20,0);
+        Items damageDebuff = new Items("Armor Booster",0,0,30,15);
+        debuffsArray.add(armorDebuff);
+        debuffsArray.add(damageDebuff);
 
     }
     public Items itemDrop() {
@@ -62,7 +67,7 @@ public class Items {
             int dice;
             Random diceRoll = new Random();
             dice = diceRoll.nextInt(100);
-            if (dice >= 0 && dice <= 40) {
+            if (dice <= 40) {
                 diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = recoversArray.get(0);

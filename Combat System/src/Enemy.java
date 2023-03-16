@@ -3,6 +3,7 @@ import java.util.Random;
 public class Enemy extends NPC{
 
     public NPCType etype;
+
     public Enemy(NPCType _etype, String _name, int _hp, int _mana, int _armor, int _damage){
         super(_name, _hp, _mana, _armor, _damage);
         etype = _etype;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,11 +11,9 @@ public class Adventure {
     public Animal animal;
     int encounterRoll;
     public Items item = new Items("default", 10, 10, 10, 10);
-
+    public List<Items> playerInventory = new ArrayList<>();
     private int steps;
-    private boolean healthCheck = true;
-    private boolean enemyHealthCheck = true;
-    private boolean animalHealthCheck = true;
+
 
     public void init() {
 
@@ -116,6 +115,8 @@ public class Adventure {
                     break;
                 case 3:
                     item = item.itemDrop();
+                    playerInventory();
+                    openInventory();
                     break;
                 case 4:
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
@@ -123,6 +124,8 @@ public class Adventure {
                     civilian.allStatsTogether();
                     civilian.civilAction();
                     item = item.itemDrop();
+                    playerInventory();
+                    openInventory();
                     break;
                 case 5:
                     animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
@@ -155,7 +158,7 @@ public class Adventure {
             do {
                 e.hp -= h.heroAttack();
                 enemyHealthChecker();
-                System.out.println("Hp remain = " + e.hp);
+                System.out.println(e.getName() + "Hp remain = " + e.hp);
                 h.hp -= enemy.enemyAttack();
                 healthChecker();
                 System.out.println("Your Hp = " + h.hp);
@@ -166,8 +169,7 @@ public class Adventure {
     public void healthChecker() {
         if (hero.getHp() <= 0) {
             hero.hp = 0;
-            System.out.println("You Died");
-            healthCheck = false;
+            System.out.println("You Died, Reset the Game NOW");
             init();
         }
     }
@@ -175,17 +177,27 @@ public class Adventure {
     public void enemyHealthChecker() {
         if (enemy.getHp() <= 0) {
             enemy.hp = 0;
-            enemyHealthCheck = false;
-            encounter();
+            System.out.println(enemy.getName() + " Died, the journey continues");
+            initialize();
         }
     }
 
     public void animalHealthChecker() {
         if (animal.getHp() <= 0) {
             animal.hp = 0;
-            animalHealthCheck = false;
-            encounter();
+            System.out.println(animal.getName() + " Died");
+            initialize();
         }
+    }
+
+    public void playerInventory() {
+        if (encounterRoll == 3 || encounterRoll == 4) {
+            playerInventory.add(item);
+        }
+    }
+
+    public void openInventory() {
+        playerInventory.forEach(items -> System.out.println("-> " + item.getItemName()));
     }
 }
 
