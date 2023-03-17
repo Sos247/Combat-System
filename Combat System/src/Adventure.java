@@ -10,7 +10,7 @@ public class Adventure {
     public Civilian civilian;
     public Animal animal;
     int encounterRoll;
-    public Items item = new Items("default", 10, 10, 10, 10);
+    public Items item;
     public List<Items> playerInventory = new ArrayList<>();
     private int steps;
 
@@ -66,7 +66,7 @@ public class Adventure {
             selection = input.nextInt();
             switch (selection) {
                 case 1:
-                    hero = new Hero(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
+                    hero = new Hero(NPCType.BARBARIAN, "Barbarian", 500, 40, 60, 60);
                     break;
                 case 2:
                     hero = new Hero(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
@@ -114,6 +114,7 @@ public class Adventure {
                     battle(hero, enemy, animal);
                     break;
                 case 3:
+                    item = new Items("def", 10,10,10,10);
                     item = item.itemDrop();
                     playerInventory();
                     openInventory();
@@ -123,6 +124,7 @@ public class Adventure {
                     System.out.println("Civilian" + civilian.getName());
                     civilian.allStatsTogether();
                     civilian.civilAction();
+                    item = new Items("def", 10,10,10,10);
                     item = item.itemDrop();
                     playerInventory();
                     openInventory();
@@ -164,7 +166,8 @@ public class Adventure {
 
         } else {
             do {
-                e.hp -= h.heroAttack();
+                h.heroAttack();
+                e.hp -= h.hAttack - (h.hAttack / e.getArmor());
                 if (enemy.getHp() <= 0) {
             enemy.hp = 0;
             System.out.println(enemy.getName() + " Died, the journey continues");
@@ -213,7 +216,9 @@ public class Adventure {
     }
 
     public void openInventory() {
-        playerInventory.forEach(items -> System.out.println("-> " + item.getItemName()));
+        for(Items item:playerInventory){
+         System.out.println("-> " + item.getItemName());
+        }
+
     }
 }
-

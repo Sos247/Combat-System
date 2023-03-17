@@ -51,12 +51,12 @@ public class Items {
         recoversArray.add(manaPot);
 
         Items armorBooster = new Items("Armor Booster",0,0,30,0);
-        Items damageBoost = new Items("Armor Booster",0,0,0,30);
+        Items damageBoost = new Items("Damage Booster",0,0,0,30);
         boostArray.add(armorBooster);
         boostArray.add(damageBoost);
 
-        Items armorDebuff = new Items("Armor Booster",0,0,20,0);
-        Items damageDebuff = new Items("Armor Booster",0,0,30,15);
+        Items armorDebuff = new Items("Armor Debuff",0,0,20,0);
+        Items damageDebuff = new Items("Damage Debuff",0,0,0,15);
         debuffsArray.add(armorDebuff);
         debuffsArray.add(damageDebuff);
 

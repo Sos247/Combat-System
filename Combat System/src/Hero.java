@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Hero extends NPC {
-
+    int hAttack;
     public NPCType type;
 
     public Hero(NPCType _type, String _name, int _hp, int _mana, int _armor, int _damage) {
@@ -12,7 +12,7 @@ public class Hero extends NPC {
     }
 
     public int heroAttack() {
-        int hAttack;
+        //int hAttack;
         Scanner input = new Scanner(System.in);
         System.out.println("Select Your Attack : 1.Basic  2.Slash  3. Charge");
         System.out.print("Choice : ");
