@@ -36,6 +36,7 @@ public class Adventure {
     public void setDifficulty() {
         int difficulty;
         Scanner input = new Scanner(System.in);
+        utility.printHeading("Difficulty");
         System.out.println("Select Difficulty \n|1| Easy(5 Steps) \n|2| Normal(10 Steps) \n|3| Hard(15 Steps)");
         System.out.print("Choice : ");
         do {
@@ -57,7 +58,7 @@ public class Adventure {
             }
         } while (difficulty > 3 || difficulty < 1);
         isDifficulty = true;
-        mainMenu();
+        beginMenu();
     }
 
     public int getDifficulty() {
@@ -90,7 +91,7 @@ public class Adventure {
             }
         } while (selection > 3 || selection < 1);
         isClass = true;
-        mainMenu();
+        beginMenu();
         return hero;
     }
 
@@ -238,40 +239,54 @@ public class Adventure {
         select();
         switch (selection) {
             case 1:
-                System.out.println("|1| Begin \n|2| Select Class \n|3| Back to Main Menu");
-                select();
-                switch (selection) {
-                    case 1:
-                        if (!isDifficulty || !isClass) {
-                            System.out.println("You Must Select a Class and Set your Difficulty in order to Continue");
-                            break;
-                        } else {
-                            initialize();
-                        }
-                        break;
-                    case 2:
-                        selectClass();
-                        break;
-                    case 3:
-                        mainMenu();
-                        break;
+                beginMenu();
+                break;
+            case 2:
+                optionsMenu();
+                break;
+            case 3:
+                System.exit(0);
+        }
+
+    }
+
+    public void optionsMenu() {
+        utility.printHeading("OPTIONS");
+        System.out.println("|1| Set Difficulty \n|2| Back to Main Menu");
+        select();
+        switch (selection) {
+            case 1:
+                setDifficulty();
+                break;
+            case 2:
+                mainMenu();
+                break;
+        }
+    }
+    public void beginMenu(){
+        utility.clearConsole();
+        utility.printHeading("PREPARATION MENU");
+        System.out.println("Current State of Class and Difficulty: CLASS:" + hero + " DIFFICULTY:" + getDifficulty() + " STEPS");
+        System.out.println("|1| Begin Adventure \n|2| Select Class \n|3| Select Difficulty \n|4| Back to Main Menu");
+        select();
+        switch (selection) {
+            case 1:
+                if (!isDifficulty || !isClass) {
+                    System.out.println("You Must Select a Class and Set your Difficulty in order to Continue");
+                    beginMenu();
+                    break;
+                } else {
+                    initialize();
                 }
                 break;
             case 2:
-                utility.printHeading("OPTIONS");
-                System.out.println("|1| Set Difficulty \n|2| Back to Main Menu");
-                select();
-                switch (selection) {
-                    case 1:
-                        setDifficulty();
-                        break;
-                    case 2:
-                        mainMenu();
-                        break;
-                    case 3:
-                        System.exit(0);
-                }
+                selectClass();
+                break;
+            case 3:
+                setDifficulty();
+            case 4:
+                mainMenu();
+                break;
         }
-
     }
 }
