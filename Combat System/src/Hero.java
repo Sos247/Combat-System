@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Hero extends NPC {
-    int hAttack;
     public NPCType type;
+    private List<Items> inventory = new ArrayList<>();
 
     public Hero(NPCType _type, String _name, int _hp, int _mana, int _armor, int _damage) {
 
@@ -11,31 +13,41 @@ public class Hero extends NPC {
         type = _type;
     }
 
-    public int heroAttack() {
-        //int hAttack;
+    public int attack() {
+        int attack;
         Scanner input = new Scanner(System.in);
-        System.out.println("Select Your Attack : 1.Basic  2.Slash  3. Charge");
+        System.out.println("Select Your Attack : |1| Basic  |2| Slash  |3| Charge |4| Inventory ");
         System.out.print("Choice : ");
-        hAttack = input.nextInt();
-        switch (hAttack) {
+        attack = input.nextInt();
+        switch (attack) {
             case 1:
                 System.out.println("Basic");
-                hAttack = getDamage();
+                attack = getDamage();
                 break;
             case 2:
                 System.out.println("Slash");
-                hAttack = getDamage() + 15;
+                attack = getDamage() + 15;
                 break;
             case 3:
                 System.out.println("Charge");
-                hAttack = getDamage() + 20;
+                attack = getDamage() + 20;
+                break;
+            case 4:
+                openInventory();
                 break;
             default:
                 System.out.print("Select a Proper value : ");
                 break;
         }
-        return hAttack;
+        return attack;
     }
-
+    public void fillInventory(Items item){
+        inventory.add(item);
+    }
+    public void openInventory(){
+        for(Items item : inventory){
+            System.out.println("-> " + item.getItemName());
+        }
+    }
 }
 

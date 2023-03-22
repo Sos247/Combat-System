@@ -37,12 +37,15 @@ public class NPC {
 
     public void allStatsTogether() {
         System.out.println("Class Name = " + getName() +
-                "\nHP = " + getHp() +
-                "\nMANA = " + getMana() +
-                "\nARMOR = " + getArmor() +
+                "\nHP = " + getHp() + " / " + getHp() +
+                "\nMANA = " + getMana() + " / " + getMana() +
+                "\nARMOR = " + getArmor() + " / " + getArmor() +
                 "\nDAMAGE = " + getDamage());
     }
-   
+    public int attack(){
+
+        return getDamage();
     }
+}
 
 

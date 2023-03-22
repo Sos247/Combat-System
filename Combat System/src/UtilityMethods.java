@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UtilityMethods {
@@ -25,12 +26,16 @@ public class UtilityMethods {
         System.out.println(title);
         printSeparator(30);
     }
+
     //[4]----//method to stop the game until user enters anything (pause for the user to read or take a break)----
-
-    public void anythingToContinue() {
-        System.out.println("\nPress a button and the hit Enter to continue..." + scanner.nextInt());
+    public void enterToContinue() {
+        System.out.print("Press " + "\u001B[32m" + "ENTER " + "\u001B[0m" + "To Continue ...");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
     public void select() {
         selection = scanner.nextInt();
     }

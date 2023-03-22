@@ -9,26 +9,27 @@ public class Enemy extends NPC{
         etype = _etype;
     }
 
-    public int enemyAttack(){
-
-        int eAttack;
+    @Override
+    public int attack(){
+        int attack;
         Random randSelect = new Random();
-        eAttack = randSelect.nextInt(3);
+        attack = randSelect.nextInt(3);
 
-        switch (eAttack) {
+        switch (attack) {
             case 0:
                 System.out.println("Enemy Attacked with Basic");
-                eAttack = getDamage();
+                attack = getDamage();
                 break;
             case 1:
                 System.out.println("Enemy Attacked with Slash");
-                eAttack= getDamage() + 15;
+                attack= getDamage() + 15;
                 break;
             case 2:
                 System.out.println("Enemy Attacked with Charge");
-                eAttack = getDamage() + 20;
+                attack = getDamage() + 20;
                 break;
         }
-        return eAttack;
+        return attack;
     }
+
 }

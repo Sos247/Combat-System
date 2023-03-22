@@ -24,6 +24,7 @@ public class Items {
 
     }
 
+
     public String getItemName() {
         return itemName;
     }
@@ -63,7 +64,7 @@ public class Items {
     }
     public Items itemDrop() {
         itemList();
-            Items item;
+        Items item;
             int dice;
             Random diceRoll = new Random();
             dice = diceRoll.nextInt(100);
@@ -71,28 +72,22 @@ public class Items {
                 dice = diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = recoversArray.get(0);
-                    System.out.println("You Found a " + item.getItemName());
                 } else {
                     item = recoversArray.get(1);
-                    System.out.println("You Found a " + item.getItemName());
                 }
-            } else if (dice > 40 && dice <= 80) {
+            } else if (dice <= 80) {
                dice = diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = boostArray.get(0);
-                    System.out.println("You Found a " + item.getItemName());
                 } else {
                     item = boostArray.get(1);
-                    System.out.println("You Found a " + item.getItemName());
                 }
             } else {
                 dice = diceRoll.nextInt(2);
                 if (dice == 1) {
                     item = debuffsArray.get(0);
-                    System.out.println("You Found a " + item.getItemName());
                 } else {
                     item = debuffsArray.get(1);
-                    System.out.println("You Found a " + item.getItemName());
                 }
             }
         return item;

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,7 +31,7 @@ public class Adventure {
     public void init() {
         setDifficulty();
         hero = selectClass();
-        initialize();
+        journey();
     }
 
     public void setDifficulty() {
@@ -70,7 +71,8 @@ public class Adventure {
         int selection;
 
         Scanner input = new Scanner(System.in);
-        utility.printHeading("Select Your Class ");
+        utility.clearConsole();
+        utility.printHeading("SELECT YOUR CLASS ");
         System.out.println("\n|1| Barbarian \n|2| Rogue \n|3| Wizard");
         System.out.print("Choice : ");
         do {
@@ -95,16 +97,22 @@ public class Adventure {
         return hero;
     }
 
-    public void initialize() {
+    public void journey() {
         ArrayList<Enemy> path = new ArrayList<>();
         for (int i = 1; i <= getDifficulty(); i++) {
-            path.add(encounter());
+            utility.enterToContinue();
+            utility.clearConsole();
+            if (i == 1) {
+                utility.printHeading("THE JOURNEY BEGINS!!!");
+                path.add(encounter());
+            } else {
+                utility.printHeading("THE JOURNEY CONTINUES!!");
+                path.add(encounter());
+            }
         }
     }
-
     public Enemy encounter() {
         try {
-            //healthChecker();
             Random randSelect = new Random();
             encounterRoll = randSelect.nextInt(7);
             switch (encounterRoll) {
@@ -112,41 +120,45 @@ public class Adventure {
                     enemy = new Enemy(NPCType.BARBARIAN, "Barbarian", 100, 40, 60, 60);
                     System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
-                    battle(hero, enemy, animal);
+                    utility.printHeading("TO BATTLE!!!");
+                    battle(hero, enemy);
                     break;
                 case 1:
                     enemy = new Enemy(NPCType.ROGUE, "Rogue", 100, 30, 45, 80);
                     System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
-                    battle(hero, enemy, animal);
+                    utility.printHeading("TO BATTLE!!!");
+                    battle(hero, enemy);
                     break;
                 case 2:
                     enemy = new Enemy(NPCType.WIZARD, "Wizard", 100, 80, 30, 45);
                     System.out.println("You Encounter a " + enemy.getName());
                     enemy.allStatsTogether();
-                    battle(hero, enemy, animal);
+                    utility.printHeading("TO BATTLE!!!");
+                    battle(hero, enemy);
                     break;
                 case 3:
                     item = new Items("def", 10, 10, 10, 10);
-                    item = item.itemDrop();
-                    playerInventory();
-                    openInventory();
+                    hero.fillInventory(item.itemDrop());
+                    hero.openInventory();
+                    //System.out.println("You Found a " + item.getItemName());
                     break;
                 case 4:
                     civilian = new Civilian(NPCType.CIVILIAN, "George", 50, 50, 50, 50);
-                    System.out.println("Civilian" + civilian.getName());
-                    civilian.allStatsTogether();
-                    civilian.civilAction();
                     item = new Items("def", 10, 10, 10, 10);
-                    item = item.itemDrop();
-                    playerInventory();
-                    openInventory();
+
+                    System.out.println("Civilian " + civilian.getName());
+                    civilian.talk();
+                    hero.fillInventory(item.itemDrop());
+                    hero.openInventory();
+                    //System.out.println("You Found a " + item.getItemName());
                     break;
                 case 5:
                     animal = new Animal(NPCType.ANIMAL, "Boar", 80, 0, 60, 50);
                     System.out.println("Animal" + animal.getName());
                     animal.allStatsTogether();
-                    battle(hero, enemy, animal);
+                    utility.printHeading("TO BATTLE!!!");
+                    battle(hero, animal);
                     break;
                 default:
                     System.out.println("You Encountered Nothing");
@@ -158,116 +170,69 @@ public class Adventure {
         }
     }
 
-    public void battle(Hero h, Enemy e, Animal a) {
-        if (encounterRoll == 5) {
-            do {
-                a.hp -= h.heroAttack();
-                if (animal.getHp() <= 0) {
-                    animal.hp = 0;
-                    System.out.println(animal.getName() + " Died, the journey continues");
-                    break;
-                }
-                System.out.println(animal.getName() + " Hp remain = " + a.hp);
-                h.hp -= a.animalAttack();
-                if (hero.getHp() <= 0) {
-                    hero.hp = 0;
-                    System.out.println("You Died, Reset the Game NOW");
-                    init();
-                }
-                System.out.println("Your Hp = " + h.hp);
-            } while (h.getHp() != 0 && a.getHp() != 0);
-
-        } else {
-            do {
-                h.heroAttack();
-                e.hp -= h.hAttack - (h.hAttack / e.getArmor());
-                if (enemy.getHp() <= 0) {
-                    enemy.hp = 0;
-                    System.out.println(enemy.getName() + " Died, the journey continues");
-                    break;
-                }
-                System.out.println(e.getName() + " Hp remain = " + e.hp);
-                h.hp -= enemy.enemyAttack();
-                if (hero.getHp() <= 0) {
-                    hero.hp = 0;
-                    System.out.println("You Died, Reset the Game NOW");
-                    init();
-                }
-                //healthChecker();
-                System.out.println("Your Hp = " + h.hp);
-            } while (h.getHp() > 0 && e.getHp() > 0);
-        }
-    }
-
-    public void playerInventory() {
-        if (encounterRoll == 3 || encounterRoll == 4) {
-            playerInventory.add(item);
-        }
-    }
-
-    public void openInventory() {
-        for (Items item : playerInventory) {
-            System.out.println("-> " + item.getItemName());
-        }
-
-    }
-
-    //    public void healthChecker() {
-//        if (hero.getHp() <= 0) {
-//            hero.hp = 0;
-//            System.out.println("You Died, Reset the Game NOW");
-//            init();
-//        }
-//    }
-//    public void enemyHealthChecker() {
-//        if (enemy.getHp() <= 0) {
-//            enemy.hp = 0;
-//            System.out.println(enemy.getName() + " Died, the journey continues");
-//            //initialize();
-//        }
-//    }
+    public void battle(NPC attacker, NPC defender) {
+        do {
+//            if (playerInventory.isEmpty()) {
+//                System.out.println("YOUR INVENTORY IS EMPTY");
+//            } else {
+//                System.out.print("DO YOU WANT TO USE AN ITEM ? \n|1|Yes |2|No \nCHOICE :");
+//                select();
+//                if (selection == 1) {
+//                    openInventory();
 //
-//    public void animalHealthChecker() {
-//        if (animal.getHp() <= 0) {
-//            animal.hp = 0;
-//            System.out.println(animal.getName() + " Died, the journey continues");
-//            //initialize();
-//        }
-//    }
+//                } else if (selection == 2) {
+//                    System.out.println("THE BATTLE CONTINUES");
+//                } else {
+//                    System.out.print("INCORRECT SELECTION, Y FOR YES, N FOR NO");
+//                    select();
+//                }
+//            }
+            defender.hp -= attacker.attack();
+            if (defender.hp <= 0) {
+                defender.hp = 0;
+                System.out.println(defender.getName() + "DIED");
+                utility.enterToContinue();
+                utility.clearConsole();
+                break;
+            } else {
+                System.out.println(defender.getName() + " HP = " + defender.hp);
+            }
+
+            attacker.hp -= defender.attack();
+            if (attacker.hp <= 0) {
+                attacker.hp = 0;
+                System.out.println(attacker.getName() + "YOU DIED");
+                utility.enterToContinue();
+                utility.clearConsole();
+                mainMenu();
+            } else {
+                System.out.println("YOUR REMAINING HP = " + attacker.hp);
+            }
+        } while (attacker.hp > 0 && defender.hp > 0);
+    }
     public void mainMenu() {
-        System.out.println("|1| Start Game \n|2| Options \n|3| Exit Game");
+        System.out.println("|1| Start Game \n|2| Exit Game");
+        System.out.print("Choice : ");
         select();
         switch (selection) {
             case 1:
                 beginMenu();
                 break;
             case 2:
-                optionsMenu();
-                break;
-            case 3:
                 System.exit(0);
         }
-
     }
 
-    public void optionsMenu() {
-        utility.printHeading("OPTIONS");
-        System.out.println("|1| Set Difficulty \n|2| Back to Main Menu");
-        select();
-        switch (selection) {
-            case 1:
-                setDifficulty();
-                break;
-            case 2:
-                mainMenu();
-                break;
-        }
-    }
-    public void beginMenu(){
+    public void beginMenu() {
         utility.clearConsole();
         utility.printHeading("PREPARATION MENU");
-        System.out.println("Current State of Class and Difficulty: CLASS:" + hero + " DIFFICULTY:" + getDifficulty() + " STEPS");
+        if (!isClass) {
+            System.out.println("Current State of Class and Difficulty: CLASS: NO CLASS SELECTED YET" + " DIFFICULTY:" + getDifficulty() + " STEPS");
+        } else {
+            System.out.println("Current State of Class and Difficulty: CLASS:" + hero.getName() + " DIFFICULTY:" + getDifficulty() + " STEPS");
+        }
         System.out.println("|1| Begin Adventure \n|2| Select Class \n|3| Select Difficulty \n|4| Back to Main Menu");
+        System.out.print("Choice : ");
         select();
         switch (selection) {
             case 1:
@@ -276,7 +241,7 @@ public class Adventure {
                     beginMenu();
                     break;
                 } else {
-                    initialize();
+                    journey();
                 }
                 break;
             case 2:
