@@ -46,18 +46,20 @@ public class Items {
     }
 
     public void itemList() {
-        Items healthPot = new Items("Health Pot",30,0,0,0);
-        Items manaPot = new Items("Mana Pot",0,30,0,0);
+        NPC heroBuffed = new NPC("d",10,10,10,10);
+        NPC enemyDebuffed = new NPC("d", 10,10,10,10);
+        Items healthPot = new Items("Health Pot",heroBuffed.getHp() + 30,0,0,0);
+        Items manaPot = new Items("Mana Pot",0,heroBuffed.getMana() + 30,0,0);
         recoversArray.add(healthPot);
         recoversArray.add(manaPot);
 
-        Items armorBooster = new Items("Armor Booster",0,0,30,0);
-        Items damageBoost = new Items("Damage Booster",0,0,0,30);
+        Items armorBooster = new Items("Armor Booster",0,0,heroBuffed.getArmor() + 30,0);
+        Items damageBoost = new Items("Damage Booster",0,0,0,heroBuffed.getDamage() + 30);
         boostArray.add(armorBooster);
         boostArray.add(damageBoost);
 
-        Items armorDebuff = new Items("Armor Debuff",0,0,20,0);
-        Items damageDebuff = new Items("Damage Debuff",0,0,0,15);
+        Items armorDebuff = new Items("Armor Debuff",0,0,enemyDebuffed.getArmor() - 20,0);
+        Items damageDebuff = new Items("Damage Debuff",0,0,0,enemyDebuffed.getDamage() - 15);
         debuffsArray.add(armorDebuff);
         debuffsArray.add(damageDebuff);
 

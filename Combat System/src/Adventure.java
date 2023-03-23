@@ -1,6 +1,4 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,9 +8,8 @@ public class Adventure {
     public Enemy enemy;
     public Civilian civilian;
     public Animal animal;
-    int encounterRoll;
+    //int encounterRoll;
     public Items item;
-    public List<Items> playerInventory = new ArrayList<>();
     private int steps;
     public UtilityMethods utility = new UtilityMethods();
     private int selection;
@@ -23,15 +20,9 @@ public class Adventure {
         selection = scanner.nextInt();
     }
 
-    public void init2() {
+    public void init() {
         utility.printHeading("textRPG");
         mainMenu();
-    }
-
-    public void init() {
-        setDifficulty();
-        hero = selectClass();
-        journey();
     }
 
     public void setDifficulty() {
@@ -67,9 +58,7 @@ public class Adventure {
     }
 
     public Hero selectClass() {
-
         int selection;
-
         Scanner input = new Scanner(System.in);
         utility.clearConsole();
         utility.printHeading("SELECT YOUR CLASS ");
@@ -111,8 +100,10 @@ public class Adventure {
             }
         }
     }
+
     public Enemy encounter() {
         try {
+            int encounterRoll;
             Random randSelect = new Random();
             encounterRoll = randSelect.nextInt(7);
             switch (encounterRoll) {
@@ -171,45 +162,35 @@ public class Adventure {
     }
 
     public void battle(NPC attacker, NPC defender) {
+        int attackerHP = attacker.hp;
+        int defenderHP = defender.hp;
         do {
-//            if (playerInventory.isEmpty()) {
-//                System.out.println("YOUR INVENTORY IS EMPTY");
-//            } else {
-//                System.out.print("DO YOU WANT TO USE AN ITEM ? \n|1|Yes |2|No \nCHOICE :");
-//                select();
-//                if (selection == 1) {
-//                    openInventory();
-//
-//                } else if (selection == 2) {
-//                    System.out.println("THE BATTLE CONTINUES");
-//                } else {
-//                    System.out.print("INCORRECT SELECTION, Y FOR YES, N FOR NO");
-//                    select();
-//                }
-//            }
-            defender.hp -= attacker.attack();
-            if (defender.hp <= 0) {
+            System.out.print("Select Your Attack : |1| Basic  |2| Slash  |3| Charge |4| Inventory \nChoice: ");
+            defenderHP -= attacker.attack();
+            if (defenderHP <= 0) {
                 defender.hp = 0;
-                System.out.println(defender.getName() + "DIED");
+                System.out.println(defender.getName() + " DIED");
                 utility.enterToContinue();
                 utility.clearConsole();
                 break;
             } else {
-                System.out.println(defender.getName() + " HP = " + defender.hp);
+                System.out.println(defender.getName() + " HP = " + defenderHP + " / " + defender.getHp());
             }
-
-            attacker.hp -= defender.attack();
-            if (attacker.hp <= 0) {
+            attackerHP -= defender.attack();
+            if (attackerHP <= 0) {
                 attacker.hp = 0;
-                System.out.println(attacker.getName() + "YOU DIED");
+                System.out.println(attacker.getName() + " YOU DIED");
+                isDifficulty = false;
+                isClass = false;
                 utility.enterToContinue();
                 utility.clearConsole();
                 mainMenu();
             } else {
-                System.out.println("YOUR REMAINING HP = " + attacker.hp);
+                System.out.println("YOUR REMAINING HP = " + attackerHP + " / " + attacker.getHp());
             }
         } while (attacker.hp > 0 && defender.hp > 0);
     }
+
     public void mainMenu() {
         System.out.println("|1| Start Game \n|2| Exit Game");
         System.out.print("Choice : ");

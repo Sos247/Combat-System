@@ -16,8 +16,6 @@ public class Hero extends NPC {
     public int attack() {
         int attack;
         Scanner input = new Scanner(System.in);
-        System.out.println("Select Your Attack : |1| Basic  |2| Slash  |3| Charge |4| Inventory ");
-        System.out.print("Choice : ");
         attack = input.nextInt();
         switch (attack) {
             case 1:
@@ -48,6 +46,9 @@ public class Hero extends NPC {
         for(Items item : inventory){
             System.out.println("-> " + item.getItemName());
         }
+    }
+    public int useItem(){
+        return 0;
     }
 }
 

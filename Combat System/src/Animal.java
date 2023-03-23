@@ -5,10 +5,8 @@ public class Animal extends NPC{
         super(_name, _hp, _mana, _armor, _damage);
         aType = _aType;
     }
-
-    public int animalAttack(){
-        int aAttack;
-        aAttack = getDamage();
-        return aAttack;
+    @Override
+    public int attack(){
+        return getDamage() / 2 + 5;
     }
 }
