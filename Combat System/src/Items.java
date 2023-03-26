@@ -9,10 +9,7 @@ public class Items {
     private int itemArmor;
     private int itemDamage;
 
-    List<Items> recoversArray = new ArrayList<>();
-    List<Items> boostArray = new ArrayList<>();
-    List<Items> debuffsArray = new ArrayList<>();
-
+    List<Items> itemsArray = new ArrayList<>();
 
     Items(String _name, int _hp, int _mana, int _armor, int _damage){
 
@@ -23,7 +20,9 @@ public class Items {
         itemDamage = _damage;
 
     }
-
+    public int getManaPot(){
+        return +30;
+    }
 
     public String getItemName() {
         return itemName;
@@ -46,22 +45,19 @@ public class Items {
     }
 
     public void itemList() {
-        NPC heroBuffed = new NPC("d",10,10,10,10);
-        NPC enemyDebuffed = new NPC("d", 10,10,10,10);
-        Items healthPot = new Items("Health Pot",heroBuffed.getHp() + 30,0,0,0);
-        Items manaPot = new Items("Mana Pot",0,heroBuffed.getMana() + 30,0,0);
-        recoversArray.add(healthPot);
-        recoversArray.add(manaPot);
+        Items healthPot = new Items("Health Pot",30,0,0,0);
+        Items manaPot = new Items("Mana Pot",0,30,0,0);
+        Items armorBooster = new Items("Armor Booster",0,0, 30,0);
+        Items damageBoost = new Items("Damage Booster",0,0,0, 30);
+        Items armorDebuff = new Items("Armor Debuff",0,0, - 20,0);
+        Items damageDebuff = new Items("Damage Debuff",0,0,0, 15);
 
-        Items armorBooster = new Items("Armor Booster",0,0,heroBuffed.getArmor() + 30,0);
-        Items damageBoost = new Items("Damage Booster",0,0,0,heroBuffed.getDamage() + 30);
-        boostArray.add(armorBooster);
-        boostArray.add(damageBoost);
-
-        Items armorDebuff = new Items("Armor Debuff",0,0,enemyDebuffed.getArmor() - 20,0);
-        Items damageDebuff = new Items("Damage Debuff",0,0,0,enemyDebuffed.getDamage() - 15);
-        debuffsArray.add(armorDebuff);
-        debuffsArray.add(damageDebuff);
+        itemsArray.add(healthPot);
+        itemsArray.add(manaPot);
+        itemsArray.add(armorBooster);
+        itemsArray.add(damageBoost);
+        itemsArray.add(armorDebuff);
+        itemsArray.add(damageDebuff);
 
     }
     public Items itemDrop() {
@@ -72,26 +68,30 @@ public class Items {
             dice = diceRoll.nextInt(100);
             if (dice <= 40) {
                 dice = diceRoll.nextInt(2);
-                if (dice == 1) {
-                    item = recoversArray.get(0);
+                if (dice == 0) {
+                    item = itemsArray.get(0);
                 } else {
-                    item = recoversArray.get(1);
+                    item = itemsArray.get(1);
                 }
             } else if (dice <= 80) {
                dice = diceRoll.nextInt(2);
-                if (dice == 1) {
-                    item = boostArray.get(0);
+                if (dice == 0) {
+                    item = itemsArray.get(2);
                 } else {
-                    item = boostArray.get(1);
+                    item = itemsArray.get(3);
                 }
             } else {
                 dice = diceRoll.nextInt(2);
-                if (dice == 1) {
-                    item = debuffsArray.get(0);
+                if (dice == 0) {
+                    item = itemsArray.get(4);
                 } else {
-                    item = debuffsArray.get(1);
+                    item = itemsArray.get(5);
                 }
             }
+        return item;
+    }
+    public Items useItem(){
+        Items item = new Items("de",0,0,0,0);
         return item;
     }
 

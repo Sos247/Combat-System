@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Animal extends NPC{
 
     public NPCType aType;
@@ -9,4 +11,5 @@ public class Animal extends NPC{
     public int attack(){
         return getDamage() / 2 + 5;
     }
+
 }

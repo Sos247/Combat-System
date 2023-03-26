@@ -1,8 +1,10 @@
+import java.util.Random;
+
 public class NPC {
 
-    private String name;
+    public String name;
     public int hp;
-    private int mana;
+    public int mana;
     public int armor;
     public int damage;
 
@@ -36,8 +38,7 @@ public class NPC {
     }
 
     public void allStatsTogether() {
-        System.out.println("Class Name = " + getName() +
-                "\nHP = " + getHp() + " / " + getHp() +
+        System.out.println("HP = " + getHp() + " / " + getHp() +
                 "\nMANA = " + getMana() + " / " + getMana() +
                 "\nARMOR = " + getArmor() + " / " + getArmor() +
                 "\nDAMAGE = " + getDamage());
@@ -46,6 +47,7 @@ public class NPC {
 
         return getDamage();
     }
+
 }
 
 

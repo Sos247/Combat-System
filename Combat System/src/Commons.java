@@ -1,14 +1,18 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-public class UtilityMethods {
+public class Commons {
+
+    public static String civilianNames[] = {"George", "Paul", "Keith"};
+    public static String barbarianNames[] = {"Kelthos The Mountainwalker", "Akyros The Hoardslayer","Ulos The Skullsmasher"};
+    public static String rogueNames[]= {"Meletis The Sweetspeaker", "Anthos The Backstabber","Terenios Swiftfoot"};
+    public static String wizardNames[]= {"Rubios Cosmotraveler", "Seretis The Smokepuffer", "Filios The Uranomaster"};
 
     public Scanner scanner = new Scanner(System.in);
-    private int selection;
 
 
     //[1]----method to simulate clearing out the console (adding EMPTY lines)----
-    public void clearConsole() {
+    public static void clearConsole() {
         for (int i = 0; i < 20; i++)
             System.out.println();
     }
@@ -37,6 +41,6 @@ public class UtilityMethods {
         }
     }
     public void select() {
-        selection = scanner.nextInt();
+        int selection = scanner.nextInt();
     }
 }
