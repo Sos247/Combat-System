@@ -1,12 +1,13 @@
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Commons {
 
-    public static String civilianNames[] = {"George", "Paul", "Keith"};
-    public static String barbarianNames[] = {"Kelthos The Mountainwalker", "Akyros The Hoardslayer","Ulos The Skullsmasher"};
-    public static String rogueNames[]= {"Meletis The Sweetspeaker", "Anthos The Backstabber","Terenios Swiftfoot"};
-    public static String wizardNames[]= {"Rubios Cosmotraveler", "Seretis The Smokepuffer", "Filios The Uranomaster"};
+    public static String[] civilianNames = {"George", "Paul", "Keith"};
+    public static String[] barbarianNames = {"Kelthos The Mountainwalker", "Akyros The Hoardslayer","Ulos The Skullsmasher"};
+    public static String[] rogueNames = {"Meletis The Sweetspeaker", "Anthos The Backstabber","Terenios Swiftfoot"};
+    public static String[] wizardNames = {"Rubios Cosmotraveler", "Seretis The Smokepuffer", "Filios The Uranomaster"};
 
     public Scanner scanner = new Scanner(System.in);
 
@@ -43,4 +44,10 @@ public class Commons {
     public void select() {
         int selection = scanner.nextInt();
     }
+    public String randomName (String[]names){
+
+        int index = new Random().nextInt(names.length);
+        return names[index];
+    }
+
 }

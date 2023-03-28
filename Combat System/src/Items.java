@@ -20,10 +20,6 @@ public class Items {
         itemDamage = _damage;
 
     }
-    public int getManaPot(){
-        return +30;
-    }
-
     public String getItemName() {
         return itemName;
     }
@@ -49,7 +45,7 @@ public class Items {
         Items manaPot = new Items("Mana Pot",0,30,0,0);
         Items armorBooster = new Items("Armor Booster",0,0, 30,0);
         Items damageBoost = new Items("Damage Booster",0,0,0, 30);
-        Items armorDebuff = new Items("Armor Debuff",0,0, - 20,0);
+        Items armorDebuff = new Items("Armor Debuff",0,0, 20,0);
         Items damageDebuff = new Items("Damage Debuff",0,0,0, 15);
 
         itemsArray.add(healthPot);
@@ -90,9 +86,6 @@ public class Items {
             }
         return item;
     }
-    public Items useItem(){
-        Items item = new Items("de",0,0,0,0);
-        return item;
-    }
+
 
 }
