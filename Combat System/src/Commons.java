@@ -22,7 +22,7 @@ public class Commons {
     public void printSeparator(int n) {
         for (int i = 0; i < n; i++)
             System.out.print("-");
-        System.out.println();
+            System.out.println();
     }
 
     //[3]----//method to print a heading----

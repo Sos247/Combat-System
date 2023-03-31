@@ -41,12 +41,12 @@ public class Items {
     }
 
     public void itemList() {
-        Items healthPot = new Items("Health Pot",30,0,0,0);
-        Items manaPot = new Items("Mana Pot",0,30,0,0);
-        Items armorBooster = new Items("Armor Booster",0,0, 30,0);
-        Items damageBoost = new Items("Damage Booster",0,0,0, 30);
-        Items armorDebuff = new Items("Armor Debuff",0,0, 20,0);
-        Items damageDebuff = new Items("Damage Debuff",0,0,0, 15);
+        Items healthPot = new Items(Color.RED +"Health Pot"+Color.RESET,30,0,0,0);
+        Items manaPot = new Items(Color.BLUE +"Mana Pot"+Color.RESET,0,30,0,0);
+        Items armorBooster = new Items(Color.CYAN+"Armor Booster"+Color.RESET,0,0, 30,0);
+        Items damageBoost = new Items(Color.YELLOW+"Damage Booster"+Color.RESET,0,0,0, 30);
+        Items armorDebuff = new Items(Color.PURPLE+"Armor Debuff"+Color.RESET,0,0, 20,0);
+        Items damageDebuff = new Items(Color.GREEN+"Damage Debuff"+Color.RESET,0,0,0, 15);
 
         itemsArray.add(healthPot);
         itemsArray.add(manaPot);

@@ -11,21 +11,6 @@ public class Enemy extends NPC{
 
     @Override
     public int attack(){
-        int attack;
-        Random randSelect = new Random();
-        attack = randSelect.nextInt(3);
-
-        switch (attack) {
-            case 0:
-                attack = getDamage();
-                break;
-            case 1:
-                attack= getDamage() + 15;
-                break;
-            case 2:
-                attack = getDamage() + 20;
-                break;
-        }
-        return attack;
+        return getDamage();
     }
 }

@@ -1,29 +1,30 @@
 public class NPC {
 
     public String name;
-    public int hp;
+    public int maxHP;
     public int mana;
     public int armor;
     public int damage;
-
+    public int hp;
     public int initiative;
 
-    public NPC(String _name, int _hp, int _mana, int _armor, int _damage, int _initiative) {
+    public NPC(String _name, int _maxHP, int _mana, int _armor, int _damage, int _initiative) {
 
         name = _name;
-        hp = _hp;
+        maxHP = _maxHP;
         mana = _mana;
         armor = _armor;
         damage = _damage;
         initiative = _initiative;
+        hp = maxHP;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getHp() {
-        return hp;
+    public int getMaxHP() {
+        return maxHP;
     }
 
     public int getMana() {
@@ -38,17 +39,17 @@ public class NPC {
         return damage;
     }
 
-    public void Stats() {
-        System.out.println("HP = " + hp + " / " + getHp() +
-                "\nMANA = " + mana + " / " + getMana() +
-                "\nARMOR = " + armor + " / " + getArmor() +
-                "\nDAMAGE = " + damage);
-    }
-    public int attack(){
+    public int attack() {
 
         return getDamage();
     }
 
+    public String Stats() {
+        return Color.RED + "\nHP = " + hp + Color.RESET + " / " + Color.RED + getMaxHP() + Color.RESET +
+                Color.CYAN + "\nMANA = " + mana + Color.RESET + " / "+ Color.CYAN + getMana() + Color.RESET +
+                "\nARMOR = " + armor + " / " + getArmor() +
+                "\nDAMAGE = " + damage ;
+    }
 }
 
 
