@@ -1,3 +1,5 @@
+package utils;
+
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
@@ -49,5 +51,18 @@ public class Commons {
         int index = new Random().nextInt(names.length);
         return names[index];
     }
-
+    public static void cls(){
+        try
+        {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows"))
+            {
+                Runtime.getRuntime().exec("cls");
+            }
+        }
+catch (final Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,3 +1,7 @@
+package items;
+
+import utils.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +15,7 @@ public class Items {
 
     List<Items> itemsArray = new ArrayList<>();
 
-    Items(String _name, int _hp, int _mana, int _armor, int _damage){
+    public Items(String _name, int _hp, int _mana, int _armor, int _damage){
 
         itemName= _name;
         itemHp= _hp;
@@ -86,6 +90,5 @@ public class Items {
             }
         return item;
     }
-
 
 }

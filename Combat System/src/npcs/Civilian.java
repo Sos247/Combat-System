@@ -1,4 +1,4 @@
-import java.util.Random;
+package npcs;
 
 public class Civilian extends NPC{
     public NPCType civilType;
@@ -9,4 +9,20 @@ public class Civilian extends NPC{
 
         civilType = _type;
     }
+
+    @Override
+    public String npcTalk() {
+        return "";
+    }
+
+    @Override
+    public int useAbility(int i) {
+        return 0;
+    }
+
+    @Override
+    public String abilities() {
+        return "";
+    }
+
 }
