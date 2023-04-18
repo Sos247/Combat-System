@@ -6,7 +6,7 @@ public class Animal extends NPC{
 
     public NPCType aType;
     public Animal(NPCType _aType, String _name, int _hp, int _mana, int _armor, int _damage, int _initiative){
-        super(_name, _hp, _mana, _armor, _damage, _initiative);
+        super(_name, _hp, _mana, _armor, _damage, _initiative, _aType);
         aType = _aType;
     }
 
@@ -15,10 +15,6 @@ public class Animal extends NPC{
         return "";
     }
 
-    @Override
-    public int useAbility(int i) {
-        return 0;
-    }
 
     @Override
     public String abilities() {

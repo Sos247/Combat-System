@@ -8,5 +8,6 @@ public enum NPCType {
     CIVILIAN,
     HAWK,
     BOAR,
-    LION
+    LION,
+    DRAGON
 }

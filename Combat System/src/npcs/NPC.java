@@ -9,12 +9,17 @@ public abstract class NPC {
     public int damage;
     public int hp;
     public int initiative;
+
+    public NPCType getType() {
+        return type;
+    }
+
+    public NPCType type;
     public abstract String npcTalk();
-    public abstract int useAbility(int i);
     public abstract String abilities();
 
 
-    public NPC(String _name, int _maxHP, int _mana, int _armor, int _damage, int _initiative) {
+    public NPC(String _name, int _maxHP, int _mana, int _armor, int _damage, int _initiative, NPCType _type) {
 
         name = _name;
         maxHP = _maxHP;
@@ -22,6 +27,7 @@ public abstract class NPC {
         armor = _armor;
         damage = _damage;
         initiative = _initiative;
+        type = _type;
         hp = maxHP;
     }
 

@@ -26,6 +26,22 @@ public class Adventure {
         mainMenu();
     }
 
+    public void mainMenu() {
+        System.out.println("|1| Start Game \n|2| Exit Game");
+        System.out.print("Choice : ");
+        select();
+        switch (selection) {
+            case 1:
+                selectClass();
+                Commons.clearConsole();
+                setDifficulty();
+                journey();
+                break;
+            case 2:
+                System.exit(0);
+        }
+    }
+
     public void setDifficulty() {
         int difficulty;
         Scanner input = new Scanner(System.in);
@@ -101,8 +117,12 @@ public class Adventure {
             if (i == 1) {
                 utility.printHeading("THE JOURNEY BEGINS!!!");
                 encounter();
+            } else if (i == getDifficulty()) {
+                utility.printHeading("THE JOURNEY ENDS HERE!!!");
+                Boss boss = new Boss(NPCType.DRAGON,"Dragonius",250,150,90,100,16);
+                battle(hero,boss);
             } else {
-                utility.printHeading("THE JOURNEY CONTINUES!!");
+                utility.printHeading("THE JOURNEY CONTINUES!!!");
                 encounter();
             }
         }
@@ -121,7 +141,7 @@ public class Adventure {
                     name = utility.randomName(Commons.barbarianNames);
                     enemy = new Enemy(NPCType.BARBARIAN, name, 100, 40, 60, 60, 9);
                     System.out.println("You Encountered " + enemy.getName());
-                    System.out.println("CLASS = " + enemy.eType + enemy.Stats());
+                    System.out.println("CLASS = " + enemy.type + enemy.Stats());
                     utility.printHeading("TO BATTLE!!!");
                     utility.enterToContinue();
                     Commons.clearConsole();
@@ -131,7 +151,7 @@ public class Adventure {
                     name = utility.randomName(Commons.rogueNames);
                     enemy = new Enemy(NPCType.ROGUE, name, 100, 30, 45, 80, 15);
                     System.out.println("You Encountered " + enemy.getName());
-                    System.out.println("CLASS = " + enemy.eType + enemy.Stats());
+                    System.out.println("CLASS = " + enemy.type + enemy.Stats());
                     utility.printHeading("TO BATTLE!!!");
                     utility.enterToContinue();
                     Commons.clearConsole();
@@ -141,7 +161,7 @@ public class Adventure {
                     name = utility.randomName(Commons.wizardNames);
                     enemy = new Enemy(NPCType.WIZARD, name, 100, 80, 30, 45, 13);
                     System.out.println("You Encountered " + enemy.getName());
-                    System.out.println("CLASS = " + enemy.eType + enemy.Stats());
+                    System.out.println("CLASS = " + enemy.type + enemy.Stats());
                     utility.printHeading("TO BATTLE!!!");
                     utility.enterToContinue();
                     Commons.clearConsole();
@@ -161,6 +181,8 @@ public class Adventure {
                     animal = new Animal(animal.animalType(), animal.getAnimal(), 80, 0, 60, 50, 6);
                     System.out.println("Animal " + animal.getName() + "\n" + animal.Stats());
                     utility.printHeading("TO BATTLE!!!");
+                    utility.enterToContinue();
+                    Commons.clearConsole();
                     battle(hero, animal);
                     break;
                 default:
@@ -173,8 +195,12 @@ public class Adventure {
     }
 
     public void battle(NPC attacker, NPC defender) {
+        Abilities attackerAbility = new Abilities("Basic", 10, 1);
+        Abilities defenderAbility = new Abilities("Basic", 10, 1);
+        int attackA = 0;
+        int attackB = 0;
+        int defAttSelection;
         boolean attackerIsTrue;
-        int attack;
         if (attacker.initiative > defender.initiative) {
             attackerIsTrue = true;
         } else if (defender.initiative > attacker.initiative) {
@@ -190,21 +216,22 @@ public class Adventure {
             }
         }
         while (attacker.hp > 0 && defender.hp > 0) {
+            System.out.println(attacker.getName() + "                  |" + defender.getName()
+                    + "\nHP = " + attacker.hp + " / " + attacker.maxHP + "          |HP = " + defender.hp + " / " + defender.maxHP
+                    + "\nMANA = " + attacker.mana + " / " + attacker.getMana() + "       |MANA = " + defender.mana + " / " + defender.getMana()
+                    + "\nARMOR = " + attacker.armor + " / " + attacker.getArmor() + "     |ARMOR = " + defender.armor + " / " + defender.getArmor()
+                    + "\nDAMAGE= " + attacker.damage + "            |DAMAGE= " + defender.damage
+                    + "\n\n");
             if (attackerIsTrue) {
                 do {
-                    System.out.print(attacker.abilities() + " |4| Inventory \nCHOICE:");
+                    System.out.print("|1| Basic" + attackerAbility.showAbilities(attacker.getType()) + "|4| Inventory \nCHOICE: ");
                     select();
-                    attack = attacker.useAbility(selection);
-                    defender.hp -= attack - defender.armor;
                     if (selection == 1) {
-                        System.out.println("You Attacked with " + hero.ability1);
+                        attackA = attacker.attack();
                         break;
-                    } else if (selection == 2) {
-                        System.out.println("You Attacked with " + hero.ability2);
-                        break;
-                    } else if (selection == 3) {
-                        System.out.println("You Attacked with " + hero.ability3);
-                        break;
+                    } else if (selection == 2 || selection == 3) {
+                        attackerAbility = attackerAbility.getAbility(selection - 1, attacker.getType());
+                        attackA = attackerAbility.getDmg() + attacker.attack();
                     } else if (selection == 4) {
                         if (hero.inventory.isEmpty()) {
                             System.out.print("Your Inventory is Empty, Select an Attack \nCHOICE :");
@@ -232,107 +259,40 @@ public class Adventure {
                             break;
                         }
                     } else {
-                        System.out.println("Select A Proper Value");
+                        System.out.print("Select A proper Value\n");
                     }
                 } while (selection > 4);
-                if (defender.hp > attacker.attack()) {
-                    System.out.println("Attacked MISSED");
-                    break;
-                } else if (defender.hp <= 0) {
-                    defender.maxHP = 0;
-                    System.out.println(defender.getName() + " DIED");
-                    break;
-                } else {
-                    System.out.println(defender.getName() + " : " + defender.npcTalk() + "\n" + defender.Stats());
-                }
+                attackerIsTrue = false;
+            }
+
+            Random randSelect = new Random();
+            defAttSelection = randSelect.nextInt(3);
+            if (defAttSelection == 0) {
+                attackB = defender.attack();
+                attackerIsTrue = true;
             } else {
-                defender.useAbility(selection);
-                attacker.hp -= defender.useAbility(selection) - attacker.armor;
-                if (attacker.hp <= 0) {
-                    attacker.maxHP = 0;
-                    System.out.println(attacker.getName() + " YOU DIED");
-                    mainMenu();
-                } else {
-                    utility.printHeading("YOUR STATS");
-                    System.out.println(attacker.Stats());
-                }
+                defenderAbility = defenderAbility.getAbility(defAttSelection, defender.getType());
+                attackB = defenderAbility.getDmg() + defender.attack();
                 attackerIsTrue = true;
             }
-        }
-    }
-
-    public void mainMenu() {
-        System.out.println("|1| Start Game \n|2| Exit Game");
-        System.out.print("Choice : ");
-        select();
-        switch (selection) {
-            case 1:
-                selectClass();
-                Commons.clearConsole();
-                setDifficulty();
-                journey();
-                break;
-            case 2:
-                System.exit(0);
+            defender.hp -= attackA;
+            attacker.hp -= attackB;
+            System.out.println("You Attacked with " + attackerAbility.getName() + "\n" + defender.getName() + " Attacked with " + defenderAbility.getName());
+            System.out.println("You Did " + attackA + " Damage\n" + defender.getName() + " Did " + attackB + " Damage");
+            if (defender.hp <= 0) {
+                defender.hp = 0;
+                System.out.println(defender.getName() + "DIED");
+            }
+            if (attacker.hp <= 0) {
+                System.out.println("YOU DIED");
+                mainMenu();
+            }
         }
     }
 }
 
 
-//   if (selection == 1) {
-//        System.out.println("You Attacked with Basic");
-//        defender.hp -= attacker.attack() - defender.armor;
-//        break;
-//    } else if (selection == 2) {
-//        System.out.println("You Attacked with Slash");
-//        defender.hp -= (attacker.attack() + 10) - defender.armor;
-//        break;
-//    } else if (selection == 3) {
-//        System.out.println("You Attacked with Charge");
-//        defender.hp -= (attacker.attack() + 20) - defender.armor;
-//        break;
-//
-//    } else if (selection == 4) {
-//        if (hero.inventory.isEmpty()) {
-//            System.out.print("Your Inventory is Empty, Select an Attack \nCHOICE :");
-//            select();
-//        } else {
-//            hero.openInventory();
-//            do {
-//                System.out.println("Select an Item to Use \nCHOICE: ");
-//                select();
-//                if (selection <= hero.inventory.size()) {
-//                    if (Objects.equals(hero.inventory.get(selection).getItemName(), "Armor Debuff") || Objects.equals(hero.inventory.get(selection).getItemName(), "Damage Debuff")) {
-//                        defender.armor -= hero.inventory.get(selection).getItemArmor();
-//                        defender.damage -= hero.inventory.get(selection).getItemDamage();
-//                    } else {
-//                        hero.inventory.get(selection);
-//                        attacker.hp += hero.inventory.get(selection).getItemHp();
-//                        attacker.mana += hero.inventory.get(selection).getItemMana();
-//                        attacker.armor += hero.inventory.get(selection).getItemArmor();
-//                        attacker.damage += hero.inventory.get(selection).getItemDamage();
-//                        hero.inventory.remove(selection);
-//                        attacker.Stats();
-//                    }
-//                }
-//            } while (selection > hero.inventory.size());
-//            break;
-//        }
-//    } else {
-//        System.out.println("Select A Proper Value");
-//    }
-//} while (selection > 4);
 
 
-//    Random randSelect = new Random();
-//                    selection = randSelect.nextInt(3);
-//                            if (selection == 1) {
-//                            System.out.println(defender.getName() + " ATTACKS YOU WITH BASIC");
-//                            attacker.hp -= defender.attack() - attacker.armor;
-//                            } else if (selection == 2) {
-//                            System.out.println(defender.getName() + " ATTACKS YOU WITH SLASH");
-//                            attacker.hp -= (defender.attack() + 15) - attacker.armor;
-//                            } else {
-//                            System.out.println(defender.getName() + " ATTACKS YOU WITH CHARGE");
-//                            attacker.hp -= (defender.attack() + 20) - attacker.armor;
-//                            }
+
+
