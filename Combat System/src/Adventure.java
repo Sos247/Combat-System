@@ -209,8 +209,8 @@ public class Adventure {
     }
 
     public void battle(NPC attacker, NPC defender) {
-        Abilities attackerAbility = new Abilities("Basic", 10, 1);
-        Abilities defenderAbility = new Abilities("Basic", 10, 1);
+        Abilities attackerAbility = new Abilities("Basic", 0, 1);
+        Abilities defenderAbility = new Abilities("Basic", 0, 1);
         int attackA = 0;
         int attackB = 0;
         int defAttSelection;
@@ -275,15 +275,19 @@ public class Adventure {
                                     }
                                 }
                             } while (selection > hero.inventory.size());
-                            break;
                         }
+                        break;
                     } else {
                         System.out.print("Select A proper Value\n");
                     }
-                    defender.hp -= attackA;
-                    System.out.println("You Attacked with " + attackerAbility.getName() + " for " + attackA + " Damage");
-                } while (selection > 4);
-                attackerIsTrue = false;
+                    if(attackA <= defender.armor){
+                        System.out.println("Your Attack couldn't pierce "+ defender.getName() + " Armor");
+                        break;
+                    }else {
+                        defender.hp -= attackA - defender.armor;
+                        System.out.println("You Attacked with " + Color.PURPLE + attackerAbility.getName() +Color.RESET + " for " + (attackA -defender.armor) + " Damage");
+                    }
+                } while (selection > 4 && attackA != 0);
 
                 if (defender.hp <= 0) {
                     defender.hp = 0;
@@ -296,17 +300,24 @@ public class Adventure {
             defAttSelection = randSelect.nextInt(3);
             if (defAttSelection == 0) {
                 attackB = defender.attack();
-                attackerIsTrue = true;
             } else {
                 defenderAbility = defenderAbility.getAbility(defAttSelection, defender.getType());
                 attackB = defenderAbility.getDmg() + defender.attack();
-                attackerIsTrue = true;
             }
-            attacker.hp -= attackB;
-            System.out.println(defender.getName() + " Attacked with " + defenderAbility.getName() + " for " + attackB + " Damage");
+            attackerIsTrue = true;
+            if(attackB <= attacker.armor){
+                System.out.println(defender.getName() + " Attack couldn't pierce your Armor");
+                utility.enterToContinue();
+                Commons.clearConsole();
+                continue;
+            }else {
+                attacker.hp -= attackB - attacker.armor;
+                System.out.println(defender.getName() + " Attacked with " + Color.PURPLE + defenderAbility.getName() +Color.RESET + " for " + (attackB -attacker.armor) + " Damage");
+            }
 
             if (attacker.hp <= 0) {
                 System.out.println("YOU DIED");
+                Commons.clearConsole();
                 mainMenu();
             }
             utility.enterToContinue();
