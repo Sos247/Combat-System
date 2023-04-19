@@ -76,6 +76,7 @@ public class Adventure {
     }
 
     public Hero selectClass() {
+
         Hero heroBarb = new Hero(NPCType.BARBARIAN, "Barbarian", 500, 40, 60, 60, 9);
         Hero heroRog = new Hero(NPCType.ROGUE, "Rogue", 100, 30, 45, 80, 18);
         Hero heroWiz = new Hero(NPCType.WIZARD, "Wizard", 100, 80, 30, 45, 14);
@@ -83,13 +84,26 @@ public class Adventure {
         Scanner input = new Scanner(System.in);
         Commons.clearConsole();
         utility.printHeading("SELECT YOUR CLASS ");
-        utility.printHeading("|1| " + Color.RED + "BARBARIAN" + Color.RESET);
-        System.out.println(heroBarb.Stats());
-        utility.printHeading("|2| " + Color.GREEN + "ROGUE" + Color.RESET);
-        System.out.println(heroRog.Stats());
-        utility.printHeading("|3| " + Color.BLUE + "WIZARD" + Color.RESET);
-        System.out.println(heroWiz.Stats());
-        System.out.print("Choice : ");
+        System.out.printf("%5s%40s%50s\n", "|1| " + Color.RED + "BARBARIAN" + Color.RESET,
+                                                                      "|2| " + Color.GREEN + "ROGUE" + Color.RESET,
+                                                                      "|3| " + Color.BLUE + "WIZARD" + Color.RESET);
+
+        System.out.printf("%41s%59s%60s\n", Color.RED + "HP = " + heroBarb.hp + Color.RESET + " / " + Color.RED + heroBarb.getMaxHP() + Color.RESET,
+                                                                        Color.RED + "HP = " + heroRog.hp + Color.RESET + " / " + Color.RED + heroRog.getMaxHP() + Color.RESET,
+                                                                        Color.RED + "HP = " + heroWiz.hp + Color.RESET + " / " + Color.RED + heroWiz.getMaxHP() + Color.RESET);
+
+        System.out.printf("%41s%57s%57s\n",Color.CYAN + "MANA = " + heroBarb.mana + Color.RESET + " / "+ Color.CYAN + heroBarb.getMana() + Color.RESET,
+                                                                       Color.CYAN + "MANA = " + heroRog.mana + Color.RESET + " / "+ Color.CYAN + heroRog.getMana() + Color.RESET,
+                                                                       Color.CYAN + "MANA = " + heroWiz.mana + Color.RESET + " / "+ Color.CYAN + heroWiz.getMana() + Color.RESET);
+
+        System.out.printf("%20s%34s%34s\n", "ARMOR = " + heroBarb.armor + " / " + heroBarb.getArmor(),
+                                                                         "ARMOR = " + heroRog.armor + " / " + heroRog.getArmor() ,
+                                                                         "ARMOR = " + heroWiz.armor + " / " + heroWiz.getArmor() );
+
+        System.out.printf("%16s%36s%35s\n", "DAMAGE = " + heroBarb.damage,
+                                                                       "DAMAGE = " + heroRog.damage,
+                                                                       "DAMAGE = " + heroWiz.damage);
+        System.out.print("\nCHOICE : ");
         do {
             selection = input.nextInt();
             switch (selection) {
@@ -119,8 +133,8 @@ public class Adventure {
                 encounter();
             } else if (i == getDifficulty()) {
                 utility.printHeading("THE JOURNEY ENDS HERE!!!");
-                Boss boss = new Boss(NPCType.DRAGON,"Dragonius",250,150,90,100,16);
-                battle(hero,boss);
+                Boss boss = new Boss(NPCType.DRAGON, "Dragonius", 250, 150, 90, 100, 16);
+                battle(hero, boss);
             } else {
                 utility.printHeading("THE JOURNEY CONTINUES!!!");
                 encounter();
@@ -216,19 +230,23 @@ public class Adventure {
             }
         }
         while (attacker.hp > 0 && defender.hp > 0) {
-            System.out.println(attacker.getName() + "                  |" + defender.getName()
-                    + "\nHP = " + attacker.hp + " / " + attacker.maxHP + "          |HP = " + defender.hp + " / " + defender.maxHP
-                    + "\nMANA = " + attacker.mana + " / " + attacker.getMana() + "       |MANA = " + defender.mana + " / " + defender.getMana()
-                    + "\nARMOR = " + attacker.armor + " / " + attacker.getArmor() + "     |ARMOR = " + defender.armor + " / " + defender.getArmor()
-                    + "\nDAMAGE= " + attacker.damage + "            |DAMAGE= " + defender.damage
-                    + "\n\n");
+
+            System.out.printf("%S%40S\n%s%50s\n%s%48s\n%s%25s\n%s%27s\n\n", attacker.getName(), defender.getName(),
+                    Color.RED + "HP = " + attacker.hp + Color.RESET + " / " + Color.RED + attacker.getMaxHP() + Color.RESET,
+                    Color.RED + "HP = " + defender.hp + Color.RESET + " / " + Color.RED + defender.getMaxHP() + Color.RESET,
+                    Color.CYAN + "MANA = " + attacker.mana + Color.RESET + " / "+ Color.CYAN + attacker.getMana() + Color.RESET,
+                    Color.CYAN + "MANA = " + defender.mana + Color.RESET + " / "+ Color.CYAN + defender.getMana() + Color.RESET,
+                    "ARMOR = " + attacker.armor + " / " + attacker.getArmor(),
+                    "ARMOR = " + defender.armor + " / " + defender.getArmor(),
+                    "DAMAGE = " + attacker.damage,
+                    "DAMAGE = " + defender.damage);
+
             if (attackerIsTrue) {
                 do {
-                    System.out.print("|1| Basic" + attackerAbility.showAbilities(attacker.getType()) + "|4| Inventory \nCHOICE: ");
+                    System.out.print("|1| Basic " + attackerAbility.showAbilities(attacker.getType()) + " |4| Inventory \nCHOICE: ");
                     select();
                     if (selection == 1) {
                         attackA = attacker.attack();
-                        break;
                     } else if (selection == 2 || selection == 3) {
                         attackerAbility = attackerAbility.getAbility(selection - 1, attacker.getType());
                         attackA = attackerAbility.getDmg() + attacker.attack();
@@ -251,8 +269,9 @@ public class Adventure {
                                         attacker.mana += hero.inventory.get(selection).getItemMana();
                                         attacker.armor += hero.inventory.get(selection).getItemArmor();
                                         attacker.damage += hero.inventory.get(selection).getItemDamage();
+                                        System.out.println("You used " + hero.inventory.get(selection).getItemName());
                                         hero.inventory.remove(selection);
-                                        attacker.Stats();
+                                        break;
                                     }
                                 }
                             } while (selection > hero.inventory.size());
@@ -261,8 +280,16 @@ public class Adventure {
                     } else {
                         System.out.print("Select A proper Value\n");
                     }
+                    defender.hp -= attackA;
+                    System.out.println("You Attacked with " + attackerAbility.getName() + " for " + attackA + " Damage");
                 } while (selection > 4);
                 attackerIsTrue = false;
+
+                if (defender.hp <= 0) {
+                    defender.hp = 0;
+                    System.out.println(defender.getName() + " DIED");
+                    break;
+                }
             }
 
             Random randSelect = new Random();
@@ -275,18 +302,15 @@ public class Adventure {
                 attackB = defenderAbility.getDmg() + defender.attack();
                 attackerIsTrue = true;
             }
-            defender.hp -= attackA;
             attacker.hp -= attackB;
-            System.out.println("You Attacked with " + attackerAbility.getName() + "\n" + defender.getName() + " Attacked with " + defenderAbility.getName());
-            System.out.println("You Did " + attackA + " Damage\n" + defender.getName() + " Did " + attackB + " Damage");
-            if (defender.hp <= 0) {
-                defender.hp = 0;
-                System.out.println(defender.getName() + "DIED");
-            }
+            System.out.println(defender.getName() + " Attacked with " + defenderAbility.getName() + " for " + attackB + " Damage");
+
             if (attacker.hp <= 0) {
                 System.out.println("YOU DIED");
                 mainMenu();
             }
+            utility.enterToContinue();
+            Commons.clearConsole();
         }
     }
 }

@@ -29,9 +29,9 @@ public class Commons {
 
     //[3]----//method to print a heading----
     public void printHeading(String title) {
-        printSeparator(30);
+        printSeparator(title.length());
         System.out.println(title);
-        printSeparator(30);
+        printSeparator(title.length());
     }
 
     //[4]----//method to stop the game until user enters anything (pause for the user to read or take a break)----
@@ -50,19 +50,5 @@ public class Commons {
 
         int index = new Random().nextInt(names.length);
         return names[index];
-    }
-    public static void cls(){
-        try
-        {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows"))
-            {
-                Runtime.getRuntime().exec("cls");
-            }
-        }
-catch (final Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 }

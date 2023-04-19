@@ -1,6 +1,6 @@
 package npcs;
 
-public class Boss extends  Enemy{
+public class Boss extends Enemy{
 
     public NPCType  bType = NPCType.DRAGON;
 
