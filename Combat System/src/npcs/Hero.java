@@ -2,7 +2,7 @@ package npcs;
 
 import java.util.*;
 
-import items.*;
+import npcsUtils.*;
 
 public class Hero extends NPC {
 

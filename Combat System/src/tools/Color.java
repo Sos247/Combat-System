@@ -1,4 +1,4 @@
-package utils;
+package tools;
 
 public class Color {
     // Reset

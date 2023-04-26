@@ -1,6 +1,6 @@
-package items;
+package npcsUtils;
 
-import utils.Color;
+import tools.Color;
 
 import java.util.ArrayList;
 import java.util.List;

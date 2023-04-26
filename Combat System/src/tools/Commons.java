@@ -1,4 +1,4 @@
-package utils;
+package tools;
 
 import java.io.IOException;
 import java.util.Random;

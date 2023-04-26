@@ -1,12 +1,14 @@
-import items.Items;
+import npcsUtils.Abilities;
+import npcsUtils.Items;
 import npcs.*;
-import utils.*;
+import npcsUtils.StatusEffects;
+import tools.*;
 
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Adventure {
+public class Adventure{
     public Scanner scanner = new Scanner(System.in);
     public Hero hero;
     public Enemy enemy;
@@ -92,9 +94,9 @@ public class Adventure {
                                                                         Color.RED + "HP = " + heroRog.hp + Color.RESET + " / " + Color.RED + heroRog.getMaxHP() + Color.RESET,
                                                                         Color.RED + "HP = " + heroWiz.hp + Color.RESET + " / " + Color.RED + heroWiz.getMaxHP() + Color.RESET);
 
-        System.out.printf("%41s%57s%57s\n",Color.CYAN + "MANA = " + heroBarb.mana + Color.RESET + " / "+ Color.CYAN + heroBarb.getMana() + Color.RESET,
-                                                                       Color.CYAN + "MANA = " + heroRog.mana + Color.RESET + " / "+ Color.CYAN + heroRog.getMana() + Color.RESET,
-                                                                       Color.CYAN + "MANA = " + heroWiz.mana + Color.RESET + " / "+ Color.CYAN + heroWiz.getMana() + Color.RESET);
+        System.out.printf("%41s%57s%57s\n",Color.CYAN + "MANA = " + heroBarb.maxMana + Color.RESET + " / "+ Color.CYAN + heroBarb.getMaxMana() + Color.RESET,
+                                                                       Color.CYAN + "MANA = " + heroRog.maxMana + Color.RESET + " / "+ Color.CYAN + heroRog.getMaxMana() + Color.RESET,
+                                                                       Color.CYAN + "MANA = " + heroWiz.maxMana + Color.RESET + " / "+ Color.CYAN + heroWiz.getMaxMana() + Color.RESET);
 
         System.out.printf("%20s%34s%34s\n", "ARMOR = " + heroBarb.armor + " / " + heroBarb.getArmor(),
                                                                          "ARMOR = " + heroRog.armor + " / " + heroRog.getArmor() ,
@@ -209,10 +211,12 @@ public class Adventure {
     }
 
     public void battle(NPC attacker, NPC defender) {
-        Abilities attackerAbility = new Abilities("Basic", 0, 1);
-        Abilities defenderAbility = new Abilities("Basic", 0, 1);
+        Abilities attackerAbility = new Abilities("Basic", attacker.getDamage(), 20,1, StatusEffects.AIR);
+        Abilities defenderAbility = new Abilities("Basic", defender.getDamage(), 20,1,StatusEffects.BLEED);
         int attackA = 0;
         int attackB = 0;
+        int turn = 1;
+        int counter = 4;
         int defAttSelection;
         boolean attackerIsTrue;
         if (attacker.initiative > defender.initiative) {
@@ -231,11 +235,12 @@ public class Adventure {
         }
         while (attacker.hp > 0 && defender.hp > 0) {
 
+utility.printHeading("TURN " + turn);
             System.out.printf("%S%40S\n%s%50s\n%s%48s\n%s%25s\n%s%27s\n\n", attacker.getName(), defender.getName(),
                     Color.RED + "HP = " + attacker.hp + Color.RESET + " / " + Color.RED + attacker.getMaxHP() + Color.RESET,
                     Color.RED + "HP = " + defender.hp + Color.RESET + " / " + Color.RED + defender.getMaxHP() + Color.RESET,
-                    Color.CYAN + "MANA = " + attacker.mana + Color.RESET + " / "+ Color.CYAN + attacker.getMana() + Color.RESET,
-                    Color.CYAN + "MANA = " + defender.mana + Color.RESET + " / "+ Color.CYAN + defender.getMana() + Color.RESET,
+                    Color.CYAN + "MANA = " + attacker.mana + Color.RESET + " / "+ Color.CYAN + attacker.getMaxMana() + Color.RESET,
+                    Color.CYAN + "MANA = " + defender.mana + Color.RESET + " / "+ Color.CYAN + defender.getMaxMana() + Color.RESET,
                     "ARMOR = " + attacker.armor + " / " + attacker.getArmor(),
                     "ARMOR = " + defender.armor + " / " + defender.getArmor(),
                     "DAMAGE = " + attacker.damage,
@@ -245,28 +250,45 @@ public class Adventure {
                 do {
                     System.out.print("|1| Basic " + attackerAbility.showAbilities(attacker.getType()) + " |4| Inventory \nCHOICE: ");
                     select();
+                    //attackerAbility.getAbility(selection - 1, attacker.getType());
                     if (selection == 1) {
                         attackA = attacker.attack();
+                        if(attacker.mana < attacker.maxMana) {
+                            attacker.mana += attackerAbility.getManaCost();
+                        }else {
+                            continue;
+                        }
                     } else if (selection == 2 || selection == 3) {
-                        attackerAbility = attackerAbility.getAbility(selection - 1, attacker.getType());
-                        attackA = attackerAbility.getDmg() + attacker.attack();
+                        if(attacker.mana > attackerAbility.getManaCost()){
+                            attackerAbility = attackerAbility.getAbility(selection - 1, attacker.getType());
+                            attackA = attackerAbility.getDmg() + attacker.attack();
+                            attacker.mana -= attackerAbility.getManaCost();
+                            System.out.println("You enabled " + attackerAbility.getType().toString() + " on " + defender.getName() +" for the next " + turn + " turns");
+                            counter--;
+                        }else {
+                            System.out.println("You don't have enough mana to cast this spell choose another attack");
+                            selection = 0;
+                            continue;
+                        }
+
                     } else if (selection == 4) {
                         if (hero.inventory.isEmpty()) {
-                            System.out.print("Your Inventory is Empty, Select an Attack \nCHOICE :");
-                            select();
+                            System.out.println("Your Inventory is Empty, Select an Attack");
+                            selection = 0;
+                            continue;
                         } else {
                             hero.openInventory();
                             do {
                                 System.out.println("Select an Item to Use \nCHOICE: ");
                                 select();
-                                if (selection <= hero.inventory.size()) {
+                                if (selection -1  <= hero.inventory.size()) {
                                     if (Objects.equals(hero.inventory.get(selection).getItemName(), "Armor Debuff") || Objects.equals(hero.inventory.get(selection).getItemName(), "Damage Debuff")) {
                                         defender.armor -= hero.inventory.get(selection).getItemArmor();
                                         defender.damage -= hero.inventory.get(selection).getItemDamage();
                                     } else {
                                         hero.inventory.get(selection);
                                         attacker.hp += hero.inventory.get(selection).getItemHp();
-                                        attacker.mana += hero.inventory.get(selection).getItemMana();
+                                        attacker.maxMana += hero.inventory.get(selection).getItemMana();
                                         attacker.armor += hero.inventory.get(selection).getItemArmor();
                                         attacker.damage += hero.inventory.get(selection).getItemDamage();
                                         System.out.println("You used " + hero.inventory.get(selection).getItemName());
@@ -280,15 +302,19 @@ public class Adventure {
                     } else {
                         System.out.print("Select A proper Value\n");
                     }
-                    if(attackA <= defender.armor){
-                        System.out.println("Your Attack couldn't pierce "+ defender.getName() + " Armor");
-                        break;
-                    }else {
-                        defender.hp -= attackA - defender.armor;
-                        System.out.println("You Attacked with " + Color.PURPLE + attackerAbility.getName() +Color.RESET + " for " + (attackA -defender.armor) + " Damage");
-                    }
-                } while (selection > 4 && attackA != 0);
+                } while (selection > 4 || selection <=0);
+                if(selection ==2 || selection == 3){
+                    attackerAbility.statusEffectTrigger(attackerAbility.getType(), defender);
 
+                }
+                if(selection >=1 && selection <=3) {
+                    if (attackA <= defender.armor) {
+                        System.out.println("Your Attack couldn't pierce " + defender.getName() + " Armor");
+                    } else {
+                        defender.hp -= attackA - defender.armor;
+                        System.out.println("You Attacked with " + Color.PURPLE + attackerAbility.getName() + Color.RESET + " for " + (attackA - defender.armor) + " Damage");
+                    }
+                }
                 if (defender.hp <= 0) {
                     defender.hp = 0;
                     System.out.println(defender.getName() + " DIED");
@@ -298,11 +324,12 @@ public class Adventure {
 
             Random randSelect = new Random();
             defAttSelection = randSelect.nextInt(3);
+
             if (defAttSelection == 0) {
                 attackB = defender.attack();
             } else {
-                defenderAbility = defenderAbility.getAbility(defAttSelection, defender.getType());
                 attackB = defenderAbility.getDmg() + defender.attack();
+                defender.mana -= defenderAbility.getManaCost();
             }
             attackerIsTrue = true;
             if(attackB <= attacker.armor){
@@ -320,6 +347,7 @@ public class Adventure {
                 Commons.clearConsole();
                 mainMenu();
             }
+            turn++;
             utility.enterToContinue();
             Commons.clearConsole();
         }

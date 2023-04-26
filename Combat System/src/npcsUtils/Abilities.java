@@ -1,3 +1,6 @@
+package npcsUtils;
+
+import npcs.NPC;
 import npcs.NPCType;
 
 import java.util.ArrayList;
@@ -7,8 +10,20 @@ public class Abilities {
 
     private int dmg;
     private int id;
+
+    private int manaCost;
+
     private String name;
 
+    private StatusEffects type;
+
+    public StatusEffects getType() {
+        return type;
+    }
+
+    public int getManaCost() {
+        return manaCost;
+    }
 
     public String getName() {
         return name;
@@ -18,9 +33,6 @@ public class Abilities {
         return dmg;
     }
 
-    public int getId() {
-        return id;
-    }
 
     List<Abilities> barbArray = new ArrayList<>();
     List<Abilities> rogArray = new ArrayList<>();
@@ -31,44 +43,49 @@ public class Abilities {
 
 
 
-    public Abilities(String _name, int _dmg, int _id){
+    public Abilities(String _name, int _dmg, int _manaCost, int _id, StatusEffects _type){
         name = _name;
         dmg = _dmg;
+        manaCost = _manaCost;
         id = _id;
+        type = _type;
     }
 
     public void abilityList(){
 
-        Abilities basic = new Abilities("Basic", getDmg(),1);
+        Abilities slash = new Abilities("Slash", 10, 20,2,StatusEffects.BLEED);
+        Abilities charge = new Abilities("Charge", 15, 30,3,StatusEffects.BLEED);
 
-        Abilities slash = new Abilities("Slash", +10, 2);
-        Abilities charge = new Abilities("Charge", +15, 3);
+        Abilities backstab = new Abilities("Backstab", 20, 20,2,StatusEffects.BLEED);
+        Abilities daggerThrow = new Abilities("Dagger Throw", 30, 30,3,StatusEffects.POISON);
 
-        Abilities backstab = new Abilities("Backstab", +20, 2);
-        Abilities daggerThrow = new Abilities("Dagger Throw", +30, 3);
+        Abilities fireball = new Abilities("Fireball",20,20,2,StatusEffects.FIRE);
+        Abilities thunderstorm = new Abilities("Thunderstorm", 30, 30,3,StatusEffects.ELECTRIC);
 
-        Abilities fireball = new Abilities("Fireball",+20,2);
-        Abilities thunderstorm = new Abilities("Thunderstorm", +30, 3);
+        Abilities wings = new Abilities("Wingflap", 10,0,2,StatusEffects.AIR);
+        Abilities feathers = new Abilities("Feather Swing", 25,0,3,StatusEffects.AIR);
 
-        Abilities wings = new Abilities("Wingflap", +10,2);
-        Abilities feathers = new Abilities("Feather Swing", +25,3);
+        Abilities squeal = new Abilities("Squeal", 15, 0,2,StatusEffects.ECHO);
+        Abilities tusk = new Abilities("Tusks", 35,0,3,StatusEffects.BLEED);
 
-        Abilities squeal = new Abilities("Squeal", 15, 2);
-        Abilities tusk = new Abilities("Tusks", 35,3);
-
-        Abilities claw = new Abilities("Claws",20,2);
-        Abilities rawr= new Abilities("Rawr", 25,3);
+        Abilities claw = new Abilities("Claws",20,0,2,StatusEffects.BLEED);
+        Abilities rawr= new Abilities("Rawr", 25,0,3,StatusEffects.ECHO);
 
         barbArray.add(slash);
         barbArray.add(charge);
+
         rogArray.add(backstab);
         rogArray.add(daggerThrow);
+
         wizArray.add(fireball);
         wizArray.add(thunderstorm);
+
         hawkArray.add(wings);
         hawkArray.add(feathers);
+
         boarArray.add(squeal);
         boarArray.add(tusk);
+
         lionArray.add(claw);
         lionArray.add(rawr);
     }
@@ -96,5 +113,20 @@ public class Abilities {
             return "|2| " +rogArray.get(0).getName() + " |3| " + rogArray.get(1).getName() ;
         }else
             return "|2| " +wizArray.get(0).getName() + " |3| " + wizArray.get(1).getName() ;
+    }
+
+    public int statusEffectTrigger(StatusEffects effect, NPC combatant){
+        int effectType = 0;
+
+                if(effect == StatusEffects.BLEED){
+                    return combatant.hp -= 5;
+                }else if(effect == StatusEffects.POISON)
+                {
+                    return  combatant.armor -= 5;
+                } else if (effect == StatusEffects.FIRE) {
+                    return combatant.damage -= 5;
+                }
+
+        return effectType;
     }
 }

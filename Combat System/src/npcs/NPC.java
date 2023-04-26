@@ -1,19 +1,15 @@
 package npcs;
-import utils.Color;
+import tools.Color;
 public abstract class NPC {
 
     public String name;
     public int maxHP;
-    public int mana;
+    public int maxMana;
     public int armor;
     public int damage;
     public int hp;
+    public int mana;
     public int initiative;
-
-    public NPCType getType() {
-        return type;
-    }
-
     public NPCType type;
     public abstract String npcTalk();
     public abstract String abilities();
@@ -23,14 +19,17 @@ public abstract class NPC {
 
         name = _name;
         maxHP = _maxHP;
-        mana = _mana;
+        maxMana = _mana;
         armor = _armor;
         damage = _damage;
         initiative = _initiative;
         type = _type;
         hp = maxHP;
+        mana = maxMana;
     }
-
+    public NPCType getType() {
+        return type;
+    }
     public String getName() {
         return name;
     }
@@ -39,8 +38,8 @@ public abstract class NPC {
         return maxHP;
     }
 
-    public int getMana() {
-        return mana;
+    public int getMaxMana() {
+        return maxMana;
     }
 
     public int getArmor() {
@@ -52,14 +51,13 @@ public abstract class NPC {
     }
 
     public int attack() {
-
         return getDamage();
     }
 
     public String Stats() {
         abilities();
         return Color.RED + "\nHP = " + hp + Color.RESET + " / " + Color.RED + getMaxHP() + Color.RESET +
-                Color.CYAN + "\nMANA = " + mana + Color.RESET + " / "+ Color.CYAN + getMana() + Color.RESET +
+                Color.CYAN + "\nMANA = " + maxMana + Color.RESET + " / "+ Color.CYAN + getMaxMana() + Color.RESET +
                 "\nARMOR = " + armor + " / " + getArmor() +
                 "\nDAMAGE = " + damage ;
     }
