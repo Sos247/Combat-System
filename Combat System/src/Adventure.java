@@ -210,13 +210,12 @@ public class Adventure{
         }
     }
 
-    public void battle(NPC attacker, NPC defender) {
+    public void battle (NPC attacker, NPC defender) {
         Abilities attackerAbility = new Abilities("Basic", attacker.getDamage(), 20,1, StatusEffects.AIR);
         Abilities defenderAbility = new Abilities("Basic", defender.getDamage(), 20,1,StatusEffects.BLEED);
         int attackA = 0;
         int attackB = 0;
         int turn = 1;
-        int counter = 4;
         int defAttSelection;
         boolean attackerIsTrue;
         if (attacker.initiative > defender.initiative) {
@@ -259,12 +258,11 @@ utility.printHeading("TURN " + turn);
                             continue;
                         }
                     } else if (selection == 2 || selection == 3) {
-                        if(attacker.mana > attackerAbility.getManaCost()){
+                        if(attacker.mana >= attackerAbility.getManaCost()){
                             attackerAbility = attackerAbility.getAbility(selection - 1, attacker.getType());
                             attackA = attackerAbility.getDmg() + attacker.attack();
                             attacker.mana -= attackerAbility.getManaCost();
                             System.out.println("You enabled " + attackerAbility.getType().toString() + " on " + defender.getName() +" for the next " + turn + " turns");
-                            counter--;
                         }else {
                             System.out.println("You don't have enough mana to cast this spell choose another attack");
                             selection = 0;
@@ -305,7 +303,6 @@ utility.printHeading("TURN " + turn);
                 } while (selection > 4 || selection <=0);
                 if(selection ==2 || selection == 3){
                     attackerAbility.statusEffectTrigger(attackerAbility.getType(), defender);
-
                 }
                 if(selection >=1 && selection <=3) {
                     if (attackA <= defender.armor) {
@@ -322,26 +319,32 @@ utility.printHeading("TURN " + turn);
                 }
             }
 
-            Random randSelect = new Random();
-            defAttSelection = randSelect.nextInt(3);
+            do{
+                Random randSelect = new Random();
+                defAttSelection = randSelect.nextInt(3) +1 ;
 
-            if (defAttSelection == 0) {
-                attackB = defender.attack();
-            } else {
-                attackB = defenderAbility.getDmg() + defender.attack();
-                defender.mana -= defenderAbility.getManaCost();
-            }
-            attackerIsTrue = true;
-            if(attackB <= attacker.armor){
-                System.out.println(defender.getName() + " Attack couldn't pierce your Armor");
-                utility.enterToContinue();
-                Commons.clearConsole();
-                continue;
-            }else {
-                attacker.hp -= attackB - attacker.armor;
-                System.out.println(defender.getName() + " Attacked with " + Color.PURPLE + defenderAbility.getName() +Color.RESET + " for " + (attackB -attacker.armor) + " Damage");
-            }
+                if (defAttSelection == 1) {
+                    attackB = defender.attack();
+                } else {
+                    defenderAbility = defenderAbility.getAbility(defAttSelection - 1, attacker.getType());
+                    if(defender.mana >= defenderAbility.getManaCost()){
+                        attackB = defenderAbility.getDmg() + defender.attack();
+                        defender.mana -= defenderAbility.getManaCost();
+                    }else {
+                        defAttSelection = 0;
+                        continue;
+                    }
+                }
+                attackerIsTrue = true;
+                if(attackB <= attacker.armor){
+                    System.out.println(defender.getName() + " Attack couldn't pierce your Armor");
+                    continue;
+                }else {
+                    attacker.hp -= attackB - attacker.armor;
+                    System.out.println(defender.getName() + " Attacked with " + Color.PURPLE + defenderAbility.getName() +Color.RESET + " for " + (attackB -attacker.armor) + " Damage");
+                }
 
+            }while(defAttSelection >3 || defAttSelection == 0);
             if (attacker.hp <= 0) {
                 System.out.println("YOU DIED");
                 Commons.clearConsole();
@@ -352,6 +355,7 @@ utility.printHeading("TURN " + turn);
             Commons.clearConsole();
         }
     }
+
 }
 
 

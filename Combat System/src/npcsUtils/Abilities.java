@@ -17,6 +17,8 @@ public class Abilities {
 
     private StatusEffects type;
 
+    public int turns;
+
     public StatusEffects getType() {
         return type;
     }
@@ -43,6 +45,8 @@ public class Abilities {
 
 
 
+
+//Constructor for abillities
     public Abilities(String _name, int _dmg, int _manaCost, int _id, StatusEffects _type){
         name = _name;
         dmg = _dmg;
@@ -50,7 +54,10 @@ public class Abilities {
         id = _id;
         type = _type;
     }
+    // default Constructor
+    public Abilities(){
 
+    }
     public void abilityList(){
 
         Abilities slash = new Abilities("Slash", 10, 20,2,StatusEffects.BLEED);
@@ -65,11 +72,11 @@ public class Abilities {
         Abilities wings = new Abilities("Wingflap", 10,0,2,StatusEffects.AIR);
         Abilities feathers = new Abilities("Feather Swing", 25,0,3,StatusEffects.AIR);
 
-        Abilities squeal = new Abilities("Squeal", 15, 0,2,StatusEffects.ECHO);
+        Abilities squeal = new Abilities("Squeal", 15, 0,2,StatusEffects.QUAKE);
         Abilities tusk = new Abilities("Tusks", 35,0,3,StatusEffects.BLEED);
 
         Abilities claw = new Abilities("Claws",20,0,2,StatusEffects.BLEED);
-        Abilities rawr= new Abilities("Rawr", 25,0,3,StatusEffects.ECHO);
+        Abilities rawr= new Abilities("Rawr", 25,0,3,StatusEffects.QUAKE);
 
         barbArray.add(slash);
         barbArray.add(charge);
@@ -93,7 +100,7 @@ public class Abilities {
     public Abilities getAbility(int _id , NPCType _type){
         abilityList();
         if(_type == NPCType.BARBARIAN) {
-            return barbArray.get(_id - 1);
+            return barbArray.get( _id - 1);
         }else if(_type == NPCType.ROGUE){
                 return rogArray.get(_id - 1);
             }else if(_type == NPCType.WIZARD) {
